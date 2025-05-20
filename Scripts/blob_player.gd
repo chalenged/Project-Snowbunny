@@ -4,6 +4,8 @@ extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 const MAX_JUMPS = 2
+const MAX_COYOTE = 5
+var coyoteFrames: int = 0
 var jumps: int = 0
 var grounded: bool = false
 var jumpRelease: bool = true
@@ -16,9 +18,12 @@ func _physics_process(delta: float) -> void:
 	# Check if player is on floor and resets jumps to max and adds gravity if not.
 	if is_on_floor():
 		grounded = true
+		jumpRelease = true
 		jumps = MAX_JUMPS
+		coyoteFrames = MAX_COYOTE
 	else:
 		grounded = false
+		coyoteFrames = max(coyoteFrames-1,0)
 		# Jump higher if jump button is held down and fall faster if jump is released
 		if !jumpRelease and velocity.y < 0:
 			velocity += gravity * delta * 0.8
@@ -26,15 +31,18 @@ func _physics_process(delta: float) -> void:
 			velocity += gravity * delta * 2
 		else:
 			velocity += gravity * delta
-
+	
+	# Remove 1 jump when CoyoteFrames run out
+	if jumps == MAX_JUMPS and coyoteFrames == 0:
+		jumps -= 1
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and jumps>0:
-		if grounded:
+		jumpRelease = false
+		jumps = max(jumps-1,0)
+		if coyoteFrames>0:
 			velocity.y = JUMP_VELOCITY
-			jumpRelease = false
 		else:
 			velocity.y = JUMP_VELOCITY*0.85
-			jumpRelease = false
 	
 	# Check if spacebar is not held
 	if Input.is_action_just_released("ui_accept") and !jumpRelease:
@@ -46,6 +54,6 @@ func _physics_process(delta: float) -> void:
 	if direction:
 		velocity.x = direction * SPEED
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, SPEED/4)
 
 	move_and_slide()
