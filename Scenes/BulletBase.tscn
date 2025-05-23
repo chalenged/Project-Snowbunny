@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bw8eroufd3r21"]
+
+[ext_resource type="Texture2D" uid="uid://mixg2j7l3kr4" path="res://Art stuff/sprites/guns/bullet1.png" id="1_uq64h"]
+
+[node name="BulletBase" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(15, 3)
+texture = ExtResource("1_uq64h")

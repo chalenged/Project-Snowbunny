@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dit6oeklskwin"]
+
+[ext_resource type="Script" uid="uid://dxy0p81110alo" path="res://Scripts/gun_base.gd" id="1_moxo5"]
+[ext_resource type="Texture2D" uid="uid://bg4pot7pb4r7j" path="res://Art stuff/sprites/guns/pistol1.png" id="2_ko1m5"]
+
+[node name="GunBase" type="Node2D"]
+script = ExtResource("1_moxo5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(14, -9)
+texture = ExtResource("2_ko1m5")
+
+[node name="BulletPoint" type="Node2D" parent="."]
+position = Vector2(16, -3)

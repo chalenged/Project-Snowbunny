@@ -15,6 +15,10 @@ run/main_scene="uid://depsfokjud7l7"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
+[dotnet]
+
+project/assembly_name="Project Snowbunny"
+
 [editor]
 
 version_control/plugin_name="GitPlugin"
