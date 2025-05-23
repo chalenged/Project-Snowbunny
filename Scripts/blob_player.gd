@@ -4,7 +4,7 @@ extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 const MAX_JUMPS = 2
-const MAX_COYOTE = 5
+const MAX_COYOTE = 7
 const DEFAULT_TIMESCALE = 1.0
 const DEFAULT_BULLETTIME = 0.3
 const BULLETTIME_FRAMES = 15
