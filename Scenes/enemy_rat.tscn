@@ -1,0 +1,61 @@
+[gd_scene load_steps=9 format=3 uid="uid://df6y1u6ayf12b"]
+
+[ext_resource type="Script" uid="uid://cpclan6ynikqt" path="res://Scripts/enemy_rat.gd" id="1_hq70o"]
+[ext_resource type="Texture2D" uid="uid://8hps70txrp7" path="res://Art stuff/sprites/rat/rat_dead.png" id="1_w4tas"]
+[ext_resource type="Texture2D" uid="uid://b6sv7xgflo576" path="res://Art stuff/sprites/rat/rat_idle_1.png" id="2_hq70o"]
+[ext_resource type="Texture2D" uid="uid://in715egpnq2b" path="res://Art stuff/sprites/rat/rat_hit_flash.png" id="3_o6jqw"]
+[ext_resource type="Texture2D" uid="uid://c7276vrcdr6r2" path="res://Art stuff/sprites/rat/rat_hit.png" id="4_4pcpx"]
+[ext_resource type="Texture2D" uid="uid://bvtnbyqdwvobj" path="res://Art stuff/sprites/rat/rat_idle_2.png" id="5_6xak5"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hmar0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_w4tas")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_hq70o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_o6jqw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_hq70o")
+}, {
+"duration": 2.0,
+"texture": ExtResource("4_4pcpx")
+}],
+"loop": true,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_hq70o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_6xak5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w4tas"]
+size = Vector2(16, 24)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_hq70o")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_hmar0")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, 4)
+shape = SubResource("RectangleShape2D_w4tas")
