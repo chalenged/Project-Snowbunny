@@ -3,8 +3,8 @@
 [ext_resource type="Texture2D" uid="uid://cjdx4b06mh7cw" path="res://Art stuff/sprites/world/sky_blank.png" id="1_6c8ix"]
 [ext_resource type="PackedScene" uid="uid://cm23qvu0senln" path="res://Scenes/blob_player.tscn" id="1_e5hlc"]
 [ext_resource type="Texture2D" uid="uid://b7fsnkket5ndt" path="res://Art stuff/sprites/world/sky_clouds_close.png" id="2_ms1fi"]
-[ext_resource type="Script" uid="uid://n1yr7qk7h5qw" path="res://Scripts/blob_player.gd" id="2_utyh1"]
 [ext_resource type="PackedScene" uid="uid://cvlosuhdlyjoy" path="res://Scenes/blob_test_tiles.tscn" id="3_utyh1"]
+[ext_resource type="Script" uid="uid://bbntd1y06o31c" path="res://Scripts/BlobPlayer.cs" id="4_6c8ix"]
 
 [node name="BlobGameScene" type="Node2D"]
 
@@ -20,7 +20,7 @@ texture = ExtResource("2_ms1fi")
 
 [node name="BlobPlayer" parent="." instance=ExtResource("1_e5hlc")]
 position = Vector2(32, -64)
-script = ExtResource("2_utyh1")
+script = ExtResource("4_6c8ix")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(28, -19)
