@@ -1,9 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://bw8eroufd3r21"]
+[gd_scene load_steps=3 format=3 uid="uid://bw8eroufd3r21"]
 
 [ext_resource type="Texture2D" uid="uid://mixg2j7l3kr4" path="res://Art stuff/sprites/guns/bullet1.png" id="1_uq64h"]
 
-[node name="BulletBase" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uq64h"]
+size = Vector2(6, 5)
+
+[node name="BulletBase" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 3
+gravity_scale = 0.0
+linear_damp_mode = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(15, 3)
 texture = ExtResource("1_uq64h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 0.5)
+shape = SubResource("RectangleShape2D_uq64h")
