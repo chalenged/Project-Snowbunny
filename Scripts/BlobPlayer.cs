@@ -3,13 +3,21 @@ using System;
 
 public partial class BlobPlayer : CharacterBody2D
 {
-	public const float SPEED = 300.0f;
-	public const float JUMP_VELOCITY = -400.0f;
-	public const int MAX_JUMPS = 2;
-	public const float MAX_COYOTE = 7.0f;
+	[Export]
+	public float SPEED = 300.0f;
+	[Export]
+	public float JUMP_VELOCITY = -400.0f;
+	[Export]
+	public int MAX_JUMPS = 2;
+	[Export]
+	public float MAX_COYOTE = 7.0f;
+	[Export]
+	public float DEFAULT_BULLETTIME = 0.3f;
+	[Export]
+	public int BULLETTIME_FRAMES = 15;
+
 	public const float DEFAULT_TIMESCALE = 1.0f;
-	public const float DEFAULT_BULLETTIME = 0.3f;
-	public const int BULLETTIME_FRAMES = 15;
+	public float targetTimeScale = 1.0f;
 	public float coyoteFrames = 0.0f;
 	public int jumps = 0;
 	public bool grounded = false;
@@ -18,13 +26,40 @@ public partial class BlobPlayer : CharacterBody2D
 	public float timeScale = DEFAULT_TIMESCALE;
 	public float prevTimeScale = DEFAULT_TIMESCALE;
 	public bool bulletTime = false;
+	public Vector2 velocity;
 
 
 	public override void _PhysicsProcess(double delta)
 	{
-		Vector2 velocity = Velocity;
+		velocity = Velocity;
 		// Get gravity at the beginning of every frame
 		gravity = GetGravity();
+		
+		// Check if grounded and handle gravity calculations on player velocity.
+		GroundedCheck((float)delta);
+
+		// Handle jump input
+		JumpLogic((float)delta);
+
+		// Handle Bullettime input
+		BulletTimeLogic((float)delta);
+
+		// Handle horizontal movement
+		MovementLogic((float)delta);
+
+		//velocity.X = (int)velocity.X;
+		//velocity.Y = (int)velocity.Y;
+
+		//Apply calculated velocity to player
+		Velocity = velocity;
+		MoveAndSlide();
+	}
+
+
+
+
+	public void GroundedCheck(float delta)
+	{
 		// Check if player is on floor and resets jumps to max and adds gravity if not.
 		if (IsOnFloor())
 		{
@@ -40,18 +75,21 @@ public partial class BlobPlayer : CharacterBody2D
 			// Jump higher if jump button is held down and fall faster if jump is released
 			if (!jumpRelease && velocity.Y < 0)
 			{
-				velocity.Y += gravity.Y * (float)delta * 0.8f * timeScale * timeScale;
+				velocity.Y += gravity.Y * delta * 0.8f * timeScale * timeScale;
 			}
 			else if (jumpRelease && velocity.Y < 100.0f)
 			{
-				velocity.Y += gravity.Y * (float)delta * 2 * timeScale * timeScale;
+				velocity.Y += gravity.Y * delta * 2 * timeScale * timeScale;
 			}
 			else
 			{
-				velocity.Y += gravity.Y * (float)delta * timeScale * timeScale;
+				velocity.Y += gravity.Y * delta * timeScale * timeScale;
 			}
 		}
+	}
 
+	public void JumpLogic(float delta)
+	{
 		// Remove 1 jump when CoyoteFrames run out
 		if (jumps == MAX_JUMPS && coyoteFrames == 0)
 		{
@@ -77,21 +115,28 @@ public partial class BlobPlayer : CharacterBody2D
 		{
 			jumpRelease = true;
 		}
-			
+	}
+	
+	public void BulletTimeLogic(float delta)
+	{
 		// Toggle Bullet time
 		if (Input.IsActionJustPressed("ui_up"))
 		{
 			bulletTime = !bulletTime;
+			if (bulletTime)
+			{
+				targetTimeScale = DEFAULT_BULLETTIME;
+			}
+			else
+			{
+				targetTimeScale = DEFAULT_TIMESCALE;
+			}
 		}
 		
 		// Gradually change timeScale depending on BULLETTIME_FRAMES
-		if (bulletTime && timeScale != DEFAULT_BULLETTIME)
+		if (timeScale != targetTimeScale)
 		{
-			timeScale = Mathf.MoveToward(timeScale, DEFAULT_BULLETTIME, (DEFAULT_TIMESCALE-DEFAULT_BULLETTIME)/BULLETTIME_FRAMES);
-		}
-		else if (!bulletTime && timeScale != DEFAULT_TIMESCALE)
-		{
-			timeScale = Mathf.MoveToward(timeScale, DEFAULT_TIMESCALE, (DEFAULT_TIMESCALE-DEFAULT_BULLETTIME)/BULLETTIME_FRAMES);
+			timeScale = Mathf.MoveToward(timeScale, targetTimeScale, (DEFAULT_TIMESCALE-DEFAULT_BULLETTIME)/BULLETTIME_FRAMES);
 		}
 		
 		// Check if timeScale has changed and adjust velocity
@@ -100,11 +145,13 @@ public partial class BlobPlayer : CharacterBody2D
 			velocity = velocity*(timeScale/prevTimeScale);
 			prevTimeScale = timeScale;
 		}
+	}
 
+	public void MovementLogic(float delta)
+	{
 		// Get the input direction and handle the movement/deceleration.
-		// As good practice, you should replace UI actions with custom gameplay actions.
 		float direction = Input.GetAxis("ui_left", "ui_right");
-		if (Math.Abs(direction)>0)
+		if (direction!=0)
 		{
 			velocity.X = direction * SPEED * timeScale;
 		}
@@ -112,8 +159,5 @@ public partial class BlobPlayer : CharacterBody2D
 		{
 			velocity.X = Mathf.MoveToward(velocity.X, 0, SPEED/(5/timeScale/timeScale));
 		}
-
-		Velocity = velocity;
-		MoveAndSlide();
 	}
 }
