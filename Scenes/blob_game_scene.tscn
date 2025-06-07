@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=4 uid="uid://depsfokjud7l7"]
+[gd_scene load_steps=8 format=4 uid="uid://depsfokjud7l7"]
 
 [ext_resource type="Texture2D" uid="uid://cjdx4b06mh7cw" path="res://Art stuff/sprites/world/sky_blank.png" id="1_6c8ix"]
 [ext_resource type="PackedScene" uid="uid://cm23qvu0senln" path="res://Scenes/blob_player.tscn" id="1_e5hlc"]
 [ext_resource type="Texture2D" uid="uid://b7fsnkket5ndt" path="res://Art stuff/sprites/world/sky_clouds_close.png" id="2_ms1fi"]
 [ext_resource type="PackedScene" uid="uid://cvlosuhdlyjoy" path="res://Scenes/blob_test_tiles.tscn" id="3_utyh1"]
-[ext_resource type="Script" uid="uid://bbntd1y06o31c" path="res://Scripts/BlobPlayer.cs" id="4_6c8ix"]
 [ext_resource type="Texture2D" uid="uid://dvw0qb86s1ie" path="res://Art stuff/sprites/world/world2_all.png" id="6_ms1fi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8bfnp"]
@@ -472,7 +471,6 @@ texture = ExtResource("2_ms1fi")
 
 [node name="BlobPlayer" parent="." instance=ExtResource("1_e5hlc")]
 position = Vector2(32, -64)
-script = ExtResource("4_6c8ix")
 
 [node name="Camera2D" type="Camera2D" parent="BlobPlayer"]
 position = Vector2(-4, 45)

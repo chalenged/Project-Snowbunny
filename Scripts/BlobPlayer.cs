@@ -27,8 +27,22 @@ public partial class BlobPlayer : CharacterBody2D
 	public float prevTimeScale = DEFAULT_TIMESCALE;
 	public bool bulletTime = false;
 	public Vector2 velocity;
+	public int facing = 1;
+	
+	public GpuParticles2D JumpParticleNode;
 
 
+	//[Signal]
+	//public delegate void PlayerJumpedEventHandler();
+
+
+	public override void _Ready()
+	{
+		JumpParticleNode = GetNode<GpuParticles2D>("JumpParticle");
+		//JumpParticleNode.EmitFlags = 8;
+	}
+	
+	
 	public override void _PhysicsProcess(double delta)
 	{
 		velocity = Velocity;
@@ -38,8 +52,6 @@ public partial class BlobPlayer : CharacterBody2D
 		// Check if grounded and handle gravity calculations on player velocity.
 		GroundedCheck((float)delta);
 
-		// Handle jump input
-		JumpLogic((float)delta);
 
 		// Handle Bullettime input
 		BulletTimeLogic((float)delta);
@@ -47,12 +59,15 @@ public partial class BlobPlayer : CharacterBody2D
 		// Handle horizontal movement
 		MovementLogic((float)delta);
 
+		// Handle jump input
+		JumpLogic((float)delta);
 		//velocity.X = (int)velocity.X;
 		//velocity.Y = (int)velocity.Y;
 
 		//Apply calculated velocity to player
 		Velocity = velocity;
 		MoveAndSlide();
+
 	}
 
 
@@ -102,7 +117,11 @@ public partial class BlobPlayer : CharacterBody2D
 			jumps = Math.Max(jumps-1,0);
 			if (coyoteFrames>0)
 			{
+				// TODO MAKE THIS SHIT WORK WITH XYZ SCALECURVE
+				//JumpParticleNode.GetProcessMaterial().GetParamTexture(ScaleCurve);
+				JumpParticleNode.EmitParticle(this.Transform,new Vector2((float)facing*-40.0f,0), new Color(1,1,1,1), new Color(1,1,1,1), 5);
 				velocity.Y = JUMP_VELOCITY * timeScale;
+				//EmitSignal(SignalName.PlayerJumped);
 			}
 			else
 			{
@@ -154,10 +173,13 @@ public partial class BlobPlayer : CharacterBody2D
 		if (direction!=0)
 		{
 			velocity.X = direction * SPEED * timeScale;
+			facing = (int)direction;
 		}
 		else
 		{
 			velocity.X = Mathf.MoveToward(velocity.X, 0, SPEED/(5/timeScale/timeScale));
+			facing = 0;
 		}
+		
 	}
 }

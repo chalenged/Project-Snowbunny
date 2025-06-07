@@ -1,11 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://cm23qvu0senln"]
+[gd_scene load_steps=5 format=3 uid="uid://cm23qvu0senln"]
 
+[ext_resource type="Script" uid="uid://bbntd1y06o31c" path="res://Scripts/BlobPlayer.cs" id="1_npw5o"]
 [ext_resource type="Texture2D" uid="uid://bqdha0cvjg71y" path="res://Art stuff/sprites/tile_default.png" id="1_y1l2b"]
+[ext_resource type="PackedScene" uid="uid://cyexvsib56odg" path="res://Scenes/blob_jump_particle.tscn" id="2_s4le7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s4le7"]
 size = Vector2(30, 31)
 
 [node name="BlobPlayer" type="CharacterBody2D"]
+script = ExtResource("1_npw5o")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_y1l2b")
@@ -13,3 +16,6 @@ texture = ExtResource("1_y1l2b")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_s4le7")
+
+[node name="JumpParticle" parent="." instance=ExtResource("2_s4le7")]
+position = Vector2(0, 5.445)
