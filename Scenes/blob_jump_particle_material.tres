@@ -1,0 +1,29 @@
+[gd_resource type="ParticleProcessMaterial" load_steps=5 format=3 uid="uid://clfo37g6eiv60"]
+
+[sub_resource type="Curve" id="Curve_83i8y"]
+_limits = [-1.0, 1.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+metadata/_snap_enabled = true
+
+[sub_resource type="Curve" id="Curve_md8yy"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_wd2ne"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_y5jrd"]
+width = 32
+curve_x = SubResource("Curve_83i8y")
+curve_y = SubResource("Curve_md8yy")
+curve_z = SubResource("Curve_wd2ne")
+
+[resource]
+particle_flag_disable_z = true
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveXYZTexture_y5jrd")
+anim_speed_min = 1.0
+anim_speed_max = 1.0

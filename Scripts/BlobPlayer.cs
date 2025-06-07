@@ -28,8 +28,11 @@ public partial class BlobPlayer : CharacterBody2D
 	public bool bulletTime = false;
 	public Vector2 velocity;
 	public int facing = 1;
+	public int spriteX = 1;
 	
 	public GpuParticles2D JumpParticleNode;
+	public Material JumpParticleMaterial = GD.Load<Material>("res://Scenes/blob_jump_particle_material.tres");
+	public Material JumpParticleMaterialFlip = GD.Load<Material>("res://Scenes/blob_jump_particle_material_flip.tres");
 
 
 	//[Signal]
@@ -119,6 +122,8 @@ public partial class BlobPlayer : CharacterBody2D
 			{
 				// TODO MAKE THIS SHIT WORK WITH XYZ SCALECURVE
 				//JumpParticleNode.GetProcessMaterial().GetParamTexture(ScaleCurve);
+				//JumpParticleNode.ProcessMaterial;
+				
 				JumpParticleNode.EmitParticle(this.Transform,new Vector2((float)facing*-40.0f,0), new Color(1,1,1,1), new Color(1,1,1,1), 5);
 				velocity.Y = JUMP_VELOCITY * timeScale;
 				//EmitSignal(SignalName.PlayerJumped);
@@ -170,16 +175,29 @@ public partial class BlobPlayer : CharacterBody2D
 	{
 		// Get the input direction and handle the movement/deceleration.
 		float direction = Input.GetAxis("ui_left", "ui_right");
+		facing = (int)direction;
 		if (direction!=0)
 		{
 			velocity.X = direction * SPEED * timeScale;
-			facing = (int)direction;
+			if (spriteX != facing && grounded)
+			{
+				if (facing == 1)
+				{
+					spriteX = 1;
+					JumpParticleNode.SetProcessMaterial(JumpParticleMaterial);
+				}
+				else if (facing == -1)
+				{
+					spriteX = -1;
+					JumpParticleNode.SetProcessMaterial(JumpParticleMaterialFlip);
+				}
+			}
 		}
 		else
 		{
 			velocity.X = Mathf.MoveToward(velocity.X, 0, SPEED/(5/timeScale/timeScale));
-			facing = 0;
 		}
+
 		
 	}
 }
