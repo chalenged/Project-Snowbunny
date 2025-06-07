@@ -123,8 +123,10 @@ public partial class BlobPlayer : CharacterBody2D
 				// TODO MAKE THIS SHIT WORK WITH XYZ SCALECURVE
 				//JumpParticleNode.GetProcessMaterial().GetParamTexture(ScaleCurve);
 				//JumpParticleNode.ProcessMaterial;
-				
-				JumpParticleNode.EmitParticle(this.Transform,new Vector2((float)facing*-40.0f,0), new Color(1,1,1,1), new Color(1,1,1,1), 5);
+				if (grounded)
+				{
+					JumpParticleNode.EmitParticle(this.Transform,new Vector2((float)facing*-40.0f,0), new Color(1,1,1,1), new Color(1,1,1,1), 5);
+				}
 				velocity.Y = JUMP_VELOCITY * timeScale;
 				//EmitSignal(SignalName.PlayerJumped);
 			}
