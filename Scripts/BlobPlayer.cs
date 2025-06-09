@@ -71,6 +71,9 @@ public partial class BlobPlayer : CharacterBody2D
 		Velocity = velocity;
 		MoveAndSlide();
 
+		// Set player position global variable
+		GameController.Instance.playerPos = this.Position;
+
 	}
 
 

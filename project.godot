@@ -15,6 +15,10 @@ run/main_scene="uid://depsfokjud7l7"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameController="*res://Scripts/GameController.cs"
+
 [dotnet]
 
 project/assembly_name="Project Snowbunny"
