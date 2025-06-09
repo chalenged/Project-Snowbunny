@@ -27,6 +27,7 @@ public partial class GunBase : Node2D
 
     public override void _Process(double delta){ //The underscore indicates the variable isn't used
         LookAt(GetGlobalMousePosition());
+        CharacterBody2D player = GetNode<CharacterBody2D>("..");
         cooldown += (float)delta;
         if (Input.IsActionJustPressed("shoot")) {
             Shoot();

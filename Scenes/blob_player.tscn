@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://cm23qvu0senln"]
+[gd_scene load_steps=5 format=3 uid="uid://dlykafkvaf50d"]
 
 [ext_resource type="Script" uid="uid://bbntd1y06o31c" path="res://Scripts/BlobPlayer.cs" id="1_npw5o"]
 [ext_resource type="Texture2D" uid="uid://bqdha0cvjg71y" path="res://Art stuff/sprites/tile_default.png" id="1_y1l2b"]
