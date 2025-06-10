@@ -1,4 +1,5 @@
 using Godot;
+using System.Diagnostics;
 using System;
 
 public partial class BlobPlayer : CharacterBody2D
@@ -23,7 +24,6 @@ public partial class BlobPlayer : CharacterBody2D
 	public bool grounded = false;
 	public bool jumpRelease = true;
 	public Vector2 gravity;
-	public float timeScale = DEFAULT_TIMESCALE;
 	public float prevTimeScale = DEFAULT_TIMESCALE;
 	public bool bulletTime = false;
 	public Vector2 velocity;
@@ -42,7 +42,9 @@ public partial class BlobPlayer : CharacterBody2D
 	public override void _Ready()
 	{
 		JumpParticleNode = GetNode<GpuParticles2D>("JumpParticle");
+		this.AddToGroup("player", true); //Adds to group for easier reference, can use GetTree().GetFirstNodeInGroup("player") in any script to find player (will return nill if no player!!!)
 		//JumpParticleNode.EmitFlags = 8;
+		GameController.Instance.timeScale = DEFAULT_TIMESCALE;
 	}
 	
 	
@@ -73,7 +75,6 @@ public partial class BlobPlayer : CharacterBody2D
 
 		// Set player position global variable
 		GameController.Instance.playerPos = this.Position;
-
 	}
 
 
@@ -92,19 +93,19 @@ public partial class BlobPlayer : CharacterBody2D
 		else
 		{
 			grounded = false;
-			coyoteFrames = Math.Max(coyoteFrames-(1*timeScale),0);
+			coyoteFrames = Math.Max(coyoteFrames-(1*GameController.Instance.timeScale),0);
 			// Jump higher if jump button is held down and fall faster if jump is released
 			if (!jumpRelease && velocity.Y < 0)
 			{
-				velocity.Y += gravity.Y * delta * 0.8f * timeScale * timeScale;
+				velocity.Y += gravity.Y * delta * 0.8f * GameController.Instance.timeScale * GameController.Instance.timeScale;
 			}
 			else if (jumpRelease && velocity.Y < 100.0f)
 			{
-				velocity.Y += gravity.Y * delta * 2 * timeScale * timeScale;
+				velocity.Y += gravity.Y * delta * 2 * GameController.Instance.timeScale * GameController.Instance.timeScale;
 			}
 			else
 			{
-				velocity.Y += gravity.Y * delta * timeScale * timeScale;
+				velocity.Y += gravity.Y * delta * GameController.Instance.timeScale * GameController.Instance.timeScale;
 			}
 		}
 	}
@@ -130,12 +131,12 @@ public partial class BlobPlayer : CharacterBody2D
 				{
 					JumpParticleNode.EmitParticle(this.Transform,new Vector2((float)facing*-40.0f,0), new Color(1,1,1,1), new Color(1,1,1,1), 5);
 				}
-				velocity.Y = JUMP_VELOCITY * timeScale;
+				velocity.Y = JUMP_VELOCITY * GameController.Instance.timeScale;
 				//EmitSignal(SignalName.PlayerJumped);
 			}
 			else
 			{
-				velocity.Y = JUMP_VELOCITY * 0.85f * timeScale;
+				velocity.Y = JUMP_VELOCITY * 0.85f * GameController.Instance.timeScale;
 			}
 		}
 		
@@ -163,16 +164,16 @@ public partial class BlobPlayer : CharacterBody2D
 		}
 		
 		// Gradually change timeScale depending on BULLETTIME_FRAMES
-		if (timeScale != targetTimeScale)
+		if (GameController.Instance.timeScale != targetTimeScale)
 		{
-			timeScale = Mathf.MoveToward(timeScale, targetTimeScale, (DEFAULT_TIMESCALE-DEFAULT_BULLETTIME)/BULLETTIME_FRAMES);
+			GameController.Instance.timeScale = Mathf.MoveToward(GameController.Instance.timeScale, targetTimeScale, (DEFAULT_TIMESCALE-DEFAULT_BULLETTIME)/BULLETTIME_FRAMES);
 		}
 		
 		// Check if timeScale has changed and adjust velocity
-		if (timeScale != prevTimeScale)
+		if (GameController.Instance.timeScale != prevTimeScale)
 		{
-			velocity = velocity*(timeScale/prevTimeScale);
-			prevTimeScale = timeScale;
+			velocity = velocity*(GameController.Instance.timeScale/prevTimeScale);
+			prevTimeScale = GameController.Instance.timeScale;
 		}
 	}
 
@@ -183,7 +184,7 @@ public partial class BlobPlayer : CharacterBody2D
 		facing = (int)direction;
 		if (direction!=0)
 		{
-			velocity.X = direction * SPEED * timeScale;
+			velocity.X = direction * SPEED * GameController.Instance.timeScale;
 			if (spriteX != facing && grounded)
 			{
 				if (facing == 1)
@@ -200,7 +201,7 @@ public partial class BlobPlayer : CharacterBody2D
 		}
 		else
 		{
-			velocity.X = Mathf.MoveToward(velocity.X, 0, SPEED/(5/timeScale/timeScale));
+			velocity.X = Mathf.MoveToward(velocity.X, 0, SPEED/(5/GameController.Instance.timeScale/GameController.Instance.timeScale));
 		}
 
 		

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bcxh1qs1jp7ef"]
+
+[ext_resource type="Script" uid="uid://bsvdem0jrom8t" path="res://Scripts/PistolReload.cs" id="1_3s84l"]
+
+[node name="PistolReload" type="Node2D"]
+script = ExtResource("1_3s84l")

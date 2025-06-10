@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cy58jvobheoo8"]
+
+[ext_resource type="Script" uid="uid://bydoyjxqv2iic" path="res://Scenes/ParryBase.cs" id="1_ms8vy"]
+[ext_resource type="Texture2D" uid="uid://jp6f5y131dix" path="res://Art stuff/sprites/guns/parry.png" id="2_cv6sh"]
+
+[node name="ParryBase" type="Node2D"]
+script = ExtResource("1_ms8vy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_cv6sh")

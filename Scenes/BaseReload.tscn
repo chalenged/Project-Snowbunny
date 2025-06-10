@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dofpcorm8mdy7"]
+
+[ext_resource type="Script" uid="uid://dka7esv7qgbbw" path="res://Scenes/BaseReload.cs" id="1_owaca"]
+
+[node name="BaseReload" type="Node2D"]
+script = ExtResource("1_owaca")
