@@ -5,6 +5,7 @@ using System;
 public partial class GameController : Node
 {
 	public static GameController Instance { get ; private set; }
+	public Node CurrentScene {get; set;}
 
 	public Vector2 playerPos {get; set;}
 	public float timeScale = 0.0f;
@@ -15,6 +16,8 @@ public partial class GameController : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		Viewport root = GetTree().Root;
+		CurrentScene = root.GetChild(-1);
 		Instance = this;
 		playerPos = new Vector2(0,0);
 	}
@@ -26,9 +29,40 @@ public partial class GameController : Node
 		//playerPos = player.Position;
 		//Should we use physics process? this node processes _before_ player movement so it will be delayed one physics process, maybe player should update this itself? would also work better if player is not in scene (dead)
 		//Debug.Print($"{playerPos}");
+
+		if (Input.IsActionJustPressed("scene_reload"))
+		{
+			GetTree().ReloadCurrentScene();
+		}
 	}
 
 	public CharacterBody2D GetPlayer() {
 		return (CharacterBody2D)GetTree().GetFirstNodeInGroup("player");
+	}
+
+	public void GotoScene(string path)
+	{
+		CurrentScene = GetTree().CurrentScene;
+
+		//Make sure code is done running before changing scenes
+		CallDeferred(MethodName.DeferredGotoScene, path);
+	}
+
+	public void DeferredGotoScene(string path)
+	{
+		// It is now safe to remove the current scene.
+		CurrentScene.Free();
+
+		// Load a new scene.
+		var nextScene = GD.Load<PackedScene>(path);
+
+		// Instance the new scene.
+		CurrentScene = nextScene.Instantiate();
+
+		// Add it to the active scene, as child of root.
+		GetTree().Root.AddChild(CurrentScene);
+
+		// Optionally, to make it compatible with the SceneTree.change_scene_to_file() API.
+		GetTree().CurrentScene = CurrentScene;
 	}
 }
