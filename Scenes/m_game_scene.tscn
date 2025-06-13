@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cjdx4b06mh7cw" path="res://Art stuff/sprites/world/sky_blank.png" id="1_7p6w6"]
 [ext_resource type="Texture2D" uid="uid://b7fsnkket5ndt" path="res://Art stuff/sprites/world/sky_clouds_close.png" id="2_k5yej"]
-[ext_resource type="PackedScene" uid="uid://cm23qvu0senln" path="res://Scenes/blob_player.tscn" id="3_u7fbm"]
+[ext_resource type="PackedScene" uid="uid://dlykafkvaf50d" path="res://Scenes/blob_player.tscn" id="3_u7fbm"]
 [ext_resource type="PackedScene" uid="uid://dit6oeklskwin" path="res://Scenes/GunBase.tscn" id="4_pfuk2"]
 [ext_resource type="PackedScene" uid="uid://cvlosuhdlyjoy" path="res://Scenes/blob_test_tiles.tscn" id="5_g1fhb"]
 [ext_resource type="Texture2D" uid="uid://dvw0qb86s1ie" path="res://Art stuff/sprites/world/world2_all.png" id="6_q6ltu"]

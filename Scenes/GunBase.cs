@@ -35,14 +35,14 @@ public partial class GunBase : Node2D
 	public RandomNumberGenerator rng;
 
 
-    public override void _Ready() {
+	public override void _Ready() {
 		mag = magSize; //mag should start full
 		GameController.Instance.ammoMax = mag;
 		rng = new RandomNumberGenerator();
 		rng.Randomize();
 		AddToGroup("gun");
-    }
-    
+	}
+	
 	public virtual void Shoot() {
 		if (cooldown < fireRate) return;
 		mag--;
@@ -73,10 +73,10 @@ public partial class GunBase : Node2D
 		//Debug.Print($"{reloadInstance.target}");
 	}
 
-    public override void _Process(double delta){ 
-        LookAt(GetGlobalMousePosition());
-        //CharacterBody2D player = GetNode<CharacterBody2D>("..");
-        cooldown += (float)delta * GameController.Instance.timeScale;
+	public override void _Process(double delta){ 
+		LookAt(GetGlobalMousePosition());
+		//CharacterBody2D player = GetNode<CharacterBody2D>("..");
+		cooldown += (float)delta * GameController.Instance.timeScale;
 		if (reloading) {
 			reloadCooldown += (float)delta * GameController.Instance.timeScale;
 			if (reloadCooldown >= reloadSpeed) {
@@ -95,18 +95,18 @@ public partial class GunBase : Node2D
 			nScale.X = 1;
 			Scale = nScale;
 		}
-        if (Input.IsActionPressed("shoot")) {
+		if (Input.IsActionPressed("shoot")) {
 			if (mag > 0 && !reloading) {
-            	Shoot();
+				Shoot();
 			}
-        }
-        if (Input.IsActionJustPressed("reload")) {
+		}
+		if (Input.IsActionJustPressed("reload")) {
 			if (mag < magSize && !reloading) {
-            	Reload();
+				Reload();
 			}
-        }
+		}
 		GameController.Instance.ammoCur = mag;
-    }
+	}
 
 	public virtual void OnReloadSuccess(int level) {
 		Debug.Print($"{level}");

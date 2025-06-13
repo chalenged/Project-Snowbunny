@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://df6y1u6ayf12b"]
+[gd_scene load_steps=12 format=3 uid="uid://df6y1u6ayf12b"]
 
 [ext_resource type="Script" uid="uid://cpclan6ynikqt" path="res://Scripts/enemy_rat.gd" id="1_hq70o"]
 [ext_resource type="Texture2D" uid="uid://8hps70txrp7" path="res://Art stuff/sprites/rat/rat_dead.png" id="1_w4tas"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://in715egpnq2b" path="res://Art stuff/sprites/rat/rat_hit_flash.png" id="3_o6jqw"]
 [ext_resource type="Texture2D" uid="uid://c7276vrcdr6r2" path="res://Art stuff/sprites/rat/rat_hit.png" id="4_4pcpx"]
 [ext_resource type="Texture2D" uid="uid://bvtnbyqdwvobj" path="res://Art stuff/sprites/rat/rat_idle_2.png" id="5_6xak5"]
+[ext_resource type="Texture2D" uid="uid://dbg4ixwxdx4l7" path="res://Art stuff/sprites/guns/ReloadBar.png" id="7_o6jqw"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hmar0"]
 animations = [{
@@ -49,6 +50,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w4tas"]
 size = Vector2(16, 24)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hq70o"]
+size = Vector2(16, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o6jqw"]
+size = Vector2(20, 9)
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
 script = ExtResource("1_hq70o")
 
@@ -56,6 +63,25 @@ script = ExtResource("1_hq70o")
 sprite_frames = SubResource("SpriteFrames_hmar0")
 animation = &"hit"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="PlayerCollision" type="CollisionShape2D" parent="."]
 position = Vector2(-3, 4)
 shape = SubResource("RectangleShape2D_w4tas")
+
+[node name="BulletCollision" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BulletCollision"]
+position = Vector2(-4, 2)
+shape = SubResource("RectangleShape2D_hq70o")
+
+[node name="TestAttackHurtbox" type="Area2D" parent="."]
+position = Vector2(-4, 2)
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestAttackHurtbox"]
+position = Vector2(-14, 4)
+shape = SubResource("RectangleShape2D_o6jqw")
+
+[node name="HugeGiantMegaAttack" type="Sprite2D" parent="TestAttackHurtbox"]
+position = Vector2(-14, 6)
+scale = Vector2(0.320313, 0.5625)
+texture = ExtResource("7_o6jqw")
