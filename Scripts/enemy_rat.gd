@@ -15,7 +15,6 @@ var Health = 5
 func _ready():
 	#disable attack hurtbox and hide attack sprite
 	$TestAttackHurtbox.set_collision_mask_value(3, false)
-	$TestAttackHurtbox/HugeGiantMegaAttack.hide()
 	
 func _physics_process(delta): 
 	
@@ -42,8 +41,11 @@ func _physics_process(delta):
 	#attack player if they are within 50 pixels
 	elif playerDistance <= 35:
 		current_state = 2
-	#bullet needs an area2d for this to work i think
-	#elif $BulletCollision.area_entered($"/root/BulletBase/"): 
+	#figure this out later lolll
+	#elif $BulletCollision.area_entered($"/root/BulletBase"):
+		#Health = Health - 1
+		#$AnimatedSprite2D.play ("hit")
+		#return 
 	#idle state if player is too far away
 	else:
 		current_state = 0
@@ -70,13 +72,11 @@ func _angry_state():
 	return
 	
 func _attack():
-	while playerDistance <=35:
-		velocity.x = 0
-		$TestAttackHurtbox/HugeGiantMegaAttack.show()
-		$TestAttackHurtbox.set_collision_mask_value(3, true)
-		await get_tree().create_timer(1.0).timeout
-		$TestAttackHurtbox.set_collision_mask_value(3, false)
-		$TestAttackHurtbox/HugeGiantMegaAttack.hide()
-		await get_tree().create_timer(1.0).timeout
+	velocity.x = 0
+	$AnimatedSprite2D.play("attack")
+	$TestAttackHurtbox.set_collision_mask_value(3, true)
+	await get_tree().create_timer(1.0).timeout
+	$TestAttackHurtbox.set_collision_mask_value(3, false)
+	await get_tree().create_timer(1.0).timeout
 	return
 	
