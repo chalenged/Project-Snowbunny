@@ -1,7 +1,6 @@
 extends CharacterBody2D
 
 
-signal hit
 const SPEED = 100.0
 const JUMP_VELOCITY = -400.0
 var gravity: Vector2
@@ -15,6 +14,7 @@ var Health = 5
 func _ready():
 	#disable attack hurtbox and hide attack sprite
 	$TestAttackHurtbox.set_collision_mask_value(3, false)
+	$AnimatedSprite2D.play("idle")
 	
 func _physics_process(delta): 
 	
@@ -25,6 +25,9 @@ func _physics_process(delta):
 	#handle gravity
 	if is_on_floor() == false:
 		velocity.y += gravity.y * delta
+	
+	if Health < 1:
+		death()
 	#get direction to player
 	direction = ($"/root/GameController".playerPos - position).normalized()
 	
@@ -41,11 +44,7 @@ func _physics_process(delta):
 	#attack player if they are within 50 pixels
 	elif playerDistance <= 35:
 		current_state = 2
-	#figure this out later lolll
-	#elif $BulletCollision.area_entered($"/root/BulletBase"):
-		#Health = Health - 1
-		#$AnimatedSprite2D.play ("hit")
-		#return 
+	
 	#idle state if player is too far away
 	else:
 		current_state = 0
@@ -61,7 +60,8 @@ func _physics_process(delta):
 	
 func _idle_state():
 	velocity.x = velocity.x * 0
-	$AnimatedSprite2D.play("idle")
+	if $AnimatedSprite2D.is_playing() == false:
+		$AnimatedSprite2D.play("idle")
 	return
 	
 func _angry_state():
@@ -79,4 +79,18 @@ func _attack():
 	$TestAttackHurtbox.set_collision_mask_value(3, false)
 	await get_tree().create_timer(1.0).timeout
 	return
+
+
+func _on_bullet_collision_area_entered(_area):
+	Health = Health - 1
+	print(Health)
+	$AnimatedSprite2D.frame = 0
+	$AnimatedSprite2D.play ("hit")
+	return 
 	
+func death():
+	$AnimatedSprite2D.play("death")
+	#$PlayerCollision.disabled = true
+	await get_tree().create_timer(1.0).timeout
+	queue_free()
+	return

@@ -20,34 +20,31 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("2_hq70o")
 }],
-"loop": true,
+"loop": false,
 "name": &"attack",
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 20.0,
 "texture": ExtResource("1_w4tas")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_hq70o")
+"duration": 3.0,
+"texture": ExtResource("4_4pcpx")
 }, {
 "duration": 1.0,
 "texture": ExtResource("3_o6jqw")
 }, {
 "duration": 1.0,
 "texture": ExtResource("2_hq70o")
-}, {
-"duration": 2.0,
-"texture": ExtResource("4_4pcpx")
 }],
-"loop": true,
+"loop": false,
 "name": &"hit",
-"speed": 5.0
+"speed": 4.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -65,7 +62,7 @@ animations = [{
 size = Vector2(16, 24)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hq70o"]
-size = Vector2(16, 28)
+size = Vector2(19, 29)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o6jqw"]
 size = Vector2(20, 9)
@@ -75,16 +72,18 @@ script = ExtResource("1_hq70o")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hmar0")
-animation = &"attack"
+animation = &"hit"
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="."]
 position = Vector2(-3, 4)
 shape = SubResource("RectangleShape2D_w4tas")
 
 [node name="BulletCollision" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BulletCollision"]
-position = Vector2(-4, 2)
+position = Vector2(-3.5, 2.5)
 shape = SubResource("RectangleShape2D_hq70o")
 
 [node name="TestAttackHurtbox" type="Area2D" parent="."]
@@ -94,3 +93,5 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TestAttackHurtbox"]
 position = Vector2(-14, 4)
 shape = SubResource("RectangleShape2D_o6jqw")
+
+[connection signal="area_entered" from="BulletCollision" to="." method="_on_bullet_collision_area_entered"]
