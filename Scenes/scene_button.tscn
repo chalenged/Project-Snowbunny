@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxnkfrylbq1gv"]
+
+[ext_resource type="Script" uid="uid://m5xdusiqkqci" path="res://Scripts/SceneButton.cs" id="1_8n2hx"]
+
+[node name="SceneButton" type="Button"]
+custom_minimum_size = Vector2(0, 32)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 8.0
+grow_horizontal = 2
+script = ExtResource("1_8n2hx")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "DEFAULT_TEXT"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -13,6 +13,10 @@ public partial class GameController : Node
 	public int ammoCur = 0;
 	public int ammoMax = 0;
 
+	private CanvasLayer PauseMenuNode;
+
+
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -20,6 +24,20 @@ public partial class GameController : Node
 		CurrentScene = root.GetChild(-1);
 		Instance = this;
 		playerPos = new Vector2(0,0);
+
+		// Make Game Controller unpausable.
+		ProcessMode = Node.ProcessModeEnum.Always;
+
+		// Preload pause menu
+		var PauseMenu = ResourceLoader.Load<PackedScene>("res://Scenes/pause_menu.tscn").Instantiate();
+		// Add pause menu as child of Game Controller
+		AddChild(PauseMenu);
+
+		PauseMenuNode = GetNode<CanvasLayer>("PauseMenu");
+		PauseMenuNode.Visible = false;
+		
+
+
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -34,6 +52,15 @@ public partial class GameController : Node
 		{
 			GetTree().ReloadCurrentScene();
 		}
+
+		if (Input.IsActionJustPressed("game_pause"))
+		{
+			GetTree().Paused = !GetTree().Paused;
+			PauseMenuNode.Visible = GetTree().Paused;
+
+		}
+
+
 	}
 
 	public CharacterBody2D GetPlayer() {
