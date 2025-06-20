@@ -67,7 +67,8 @@ func _idle_state():
 func _angry_state():
 	playerDistanceY = $"/root/GameController".playerPos.y - position.y
 	direction = ($"/root/GameController".playerPos - position).normalized() 
-	$AnimatedSprite2D.play("idle")
+	if $AnimatedSprite2D.get_animation() != "hit":
+		$AnimatedSprite2D.play("idle")
 	velocity.x = direction.x * SPEED
 	return
 	
@@ -82,10 +83,12 @@ func _attack():
 
 
 func _on_bullet_collision_area_entered(_area):
+	velocity.x = 0
 	Health = Health - 1
 	print(Health)
-	$AnimatedSprite2D.frame = 0
-	$AnimatedSprite2D.play ("hit")
+	if $AnimatedSprite2D.get_animation() != "attack":
+		$AnimatedSprite2D.frame = 0
+		$AnimatedSprite2D.play ("hit")
 	return 
 	
 func death():

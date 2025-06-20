@@ -29,7 +29,7 @@ public partial class BlobPlayer : CharacterBody2D
 	public Vector2 velocity;
 	public int facing = 1;
 	public int spriteX = 1;
-	
+		
 	public GpuParticles2D JumpParticleNode;
 	public Material JumpParticleMaterial = GD.Load<Material>("res://Scenes/blob_jump_particle_material.tres");
 	public Material JumpParticleMaterialFlip = GD.Load<Material>("res://Scenes/blob_jump_particle_material_flip.tres");
@@ -203,7 +203,6 @@ public partial class BlobPlayer : CharacterBody2D
 		{
 			velocity.X = Mathf.MoveToward(velocity.X, 0, SPEED/(5/GameController.Instance.timeScale/GameController.Instance.timeScale));
 		}
-
-		
 	}
+	
 }
