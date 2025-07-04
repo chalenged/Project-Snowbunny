@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://dm71ksyvbwob1"]
+
+[ext_resource type="Script" uid="uid://0t1maoa6eq8t" path="res://Scripts/SpriteEmitter.cs" id="1_r23t4"]
+[ext_resource type="PackedScene" uid="uid://cp5veq52nnhqd" path="res://Scenes/SpriteAnim_Dust.tscn" id="2_v6rlt"]
+
+[node name="SpriteEmitter" type="Node2D"]
+script = ExtResource("1_r23t4")
+sprite = ExtResource("2_v6rlt")

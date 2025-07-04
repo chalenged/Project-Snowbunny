@@ -8,6 +8,7 @@ public partial class GameController : Node
 	public Node CurrentScene {get; set;}
 
 	public Vector2 playerPos {get; set;}
+	public int playerMovementDirection = 0;
 	public float timeScale = 0.0f;
 
 	public int ammoCur = 0;

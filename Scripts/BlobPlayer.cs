@@ -30,18 +30,15 @@ public partial class BlobPlayer : CharacterBody2D
 	public int facing = 1;
 	public int spriteX = 1;
 		
-	public GpuParticles2D JumpParticleNode;
-	public Material JumpParticleMaterial = GD.Load<Material>("res://Scenes/blob_jump_particle_material.tres");
-	public Material JumpParticleMaterialFlip = GD.Load<Material>("res://Scenes/blob_jump_particle_material_flip.tres");
 
 
-	//[Signal]
-	//public delegate void PlayerJumpedEventHandler();
+
+	[Signal]
+	public delegate void PlayerJumpedEventHandler();
 
 
 	public override void _Ready()
 	{
-		JumpParticleNode = GetNode<GpuParticles2D>("JumpParticle");
 		this.AddToGroup("player", true); //Adds to group for easier reference, can use GetTree().GetFirstNodeInGroup("player") in any script to find player (will return nill if no player!!!)
 		//JumpParticleNode.EmitFlags = 8;
 		GameController.Instance.timeScale = DEFAULT_TIMESCALE;
@@ -124,15 +121,13 @@ public partial class BlobPlayer : CharacterBody2D
 			jumps = Math.Max(jumps-1,0);
 			if (coyoteFrames>0)
 			{
-				// TODO MAKE THIS SHIT WORK WITH XYZ SCALECURVE
-				//JumpParticleNode.GetProcessMaterial().GetParamTexture(ScaleCurve);
-				//JumpParticleNode.ProcessMaterial;
-				if (grounded)
+				
+				/*if (grounded)
 				{
-					JumpParticleNode.EmitParticle(this.Transform,new Vector2((float)facing*-40.0f,0), new Color(1,1,1,1), new Color(1,1,1,1), 5);
-				}
+				}*/
 				velocity.Y = JUMP_VELOCITY * GameController.Instance.timeScale;
-				//EmitSignal(SignalName.PlayerJumped);
+				EmitSignal(SignalName.PlayerJumped);
+				coyoteFrames = 0;
 			}
 			else
 			{
@@ -182,6 +177,7 @@ public partial class BlobPlayer : CharacterBody2D
 		// Get the input direction and handle the movement/deceleration.
 		float direction = Input.GetAxis("ui_left", "ui_right");
 		facing = (int)direction;
+		GameController.Instance.playerMovementDirection = facing;
 		if (direction!=0)
 		{
 			velocity.X = direction * SPEED * GameController.Instance.timeScale;
@@ -190,12 +186,10 @@ public partial class BlobPlayer : CharacterBody2D
 				if (facing == 1)
 				{
 					spriteX = 1;
-					JumpParticleNode.SetProcessMaterial(JumpParticleMaterial);
 				}
 				else if (facing == -1)
 				{
 					spriteX = -1;
-					JumpParticleNode.SetProcessMaterial(JumpParticleMaterialFlip);
 				}
 			}
 		}
