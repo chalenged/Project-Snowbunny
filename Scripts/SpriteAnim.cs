@@ -6,7 +6,7 @@ public partial class SpriteAnim : AnimatedSprite2D
 	[Export]
 	public float lifeTime = 100.0f;
 	[Export]
-	public float xVel = 1.6f;
+	public float xVel = 0.0f;
 	[Export]
 	public float yVel = 0.0f;
 
@@ -17,11 +17,11 @@ public partial class SpriteAnim : AnimatedSprite2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		var dir = GameController.Instance.playerMovementDirection;
-		xVel = xVel * -dir;
+		//var dir = GameController.Instance.playerMovementDirection;
+		//xVel = xVel * -dir;
 		vel.X = xVel;
 
-		if (dir < 0) FlipH = true;
+		if (xVel > 0) FlipH = true;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
