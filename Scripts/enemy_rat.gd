@@ -9,6 +9,7 @@ var playerDistance
 var playerDistanceY
 var direction
 var Health = 5
+var attackCooldown = 0
 
 #runs when scene is loaded for the first time
 func _ready():
@@ -17,7 +18,7 @@ func _ready():
 	$AnimatedSprite2D.play("idle")
 	
 func _physics_process(delta): 
-	
+	attackCooldown += delta * $"/root/GameController".timeScale
 	#get distance to player
 	playerDistance = $"/root/GameController".playerPos.distance_to(position)
 	#get gravity
@@ -39,22 +40,23 @@ func _physics_process(delta):
 		scale.y = 1
 	
 	#check if player is between 300 and 50 pixels, moves towards player if they are
-	if (playerDistance <= 300 and playerDistance > 35):
-		current_state = 1
-	#attack player if they are within 50 pixels
-	elif playerDistance <= 35:
-		current_state = 2
+	if $AnimatedSprite2D.get_animation() != "death":
+		if (playerDistance <= 300 and playerDistance > 35):
+			current_state = 1
+		#attack player if they are within 50 pixels
+		elif playerDistance <= 35 && attackCooldown >= 2:
+			current_state = 2
 	
-	#idle state if player is too far away
-	else:
-		current_state = 0
-	match(current_state):
-		0:
-			_idle_state()
-		1:
-			_angry_state()
-		2:
-			_attack()
+		#idle state if player is too far away
+		else:
+			current_state = 0
+		match(current_state):
+			0:
+				_idle_state()
+			1:
+				_angry_state()
+			2:
+				_attack()
 	
 	move_and_slide()
 	
@@ -75,10 +77,8 @@ func _angry_state():
 func _attack():
 	velocity.x = 0
 	$AnimatedSprite2D.play("attack")
-	$TestAttackHurtbox.set_collision_mask_value(3, true)
-	await get_tree().create_timer(1.0).timeout
-	$TestAttackHurtbox.set_collision_mask_value(3, false)
-	await get_tree().create_timer(1.0).timeout
+	$AnimatedSprite2D/AnimationPlayer.play("attackAnimation")
+	attackCooldown = 0
 	return
 
 
@@ -86,14 +86,14 @@ func _on_bullet_collision_area_entered(_area):
 	velocity.x = 0
 	Health = Health - 1
 	print(Health)
-	if $AnimatedSprite2D.get_animation() != "attack":
+	if $AnimatedSprite2D/AnimationPlayer.get_current_animation() != "attackAnimation":
 		$AnimatedSprite2D.frame = 0
 		$AnimatedSprite2D.play ("hit")
 	return 
 	
 func death():
 	$AnimatedSprite2D.play("death")
-	#$PlayerCollision.disabled = true
+	set_collision_layer_value(1, false)
 	await get_tree().create_timer(1.0).timeout
 	queue_free()
 	return
