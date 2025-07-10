@@ -30,4 +30,5 @@ collision_mask = 4
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_npw5o")
 
+[connection signal="PlayerJumped" from="." to="SpriteEmitter" method="OnPlayerJumped"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_hitbox_entered"]
