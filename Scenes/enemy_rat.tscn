@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://df6y1u6ayf12b"]
+[gd_scene load_steps=16 format=3 uid="uid://df6y1u6ayf12b"]
 
 [ext_resource type="Script" uid="uid://cpclan6ynikqt" path="res://Scripts/enemy_rat.gd" id="1_hq70o"]
 [ext_resource type="Texture2D" uid="uid://8hps70txrp7" path="res://Art stuff/sprites/rat/rat_dead.png" id="1_w4tas"]
@@ -76,6 +76,68 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_4pcpx"]
+resource_name = "attackAnimation"
+length = 1.40002
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Vector2(0, 0), Vector2(-17, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_6xak5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hmar0"]
+_data = {
+&"RESET": SubResource("Animation_6xak5"),
+&"attackAnimation": SubResource("Animation_4pcpx")
+}
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w4tas"]
 size = Vector2(16, 25)
 
@@ -93,6 +155,11 @@ script = ExtResource("1_hq70o")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hmar0")
 animation = &"attack"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+&"": SubResource("AnimationLibrary_hmar0")
+}
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="."]
 position = Vector2(-3, 3.5)
