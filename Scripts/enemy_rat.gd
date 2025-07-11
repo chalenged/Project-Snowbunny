@@ -40,7 +40,7 @@ func _physics_process(delta):
 		scale.y = 1
 	
 	#check if player is between 300 and 50 pixels, moves towards player if they are
-	if $AnimatedSprite2D.get_animation() != "death":
+	if $AnimatedSprite2D.get_animation() != "death" && $AnimatedSprite2D/AnimationPlayer.get_current_animation() != "attackAnimation":
 		if (playerDistance <= 300 and playerDistance > 35):
 			current_state = 1
 		#attack player if they are within 50 pixels
