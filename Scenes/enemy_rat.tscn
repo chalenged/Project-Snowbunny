@@ -26,6 +26,12 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_4pcpx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_o6jqw")
+}, {
 "duration": 20.0,
 "texture": ExtResource("1_w4tas")
 }],
@@ -154,7 +160,7 @@ script = ExtResource("1_hq70o")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hmar0")
-animation = &"attack"
+animation = &"hit"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
 libraries = {

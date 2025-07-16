@@ -1,0 +1,97 @@
+[gd_scene load_steps=14 format=3 uid="uid://be3cscf0gtxiu"]
+
+[ext_resource type="Script" uid="uid://bw1ytp8ae41xa" path="res://Scenes/enemy_gunrat.gd" id="1_kp8ip"]
+[ext_resource type="Texture2D" uid="uid://c7276vrcdr6r2" path="res://Art stuff/sprites/rat/rat_hit.png" id="2_7iudx"]
+[ext_resource type="Texture2D" uid="uid://in715egpnq2b" path="res://Art stuff/sprites/rat/rat_hit_flash.png" id="3_bvbpe"]
+[ext_resource type="Texture2D" uid="uid://8hps70txrp7" path="res://Art stuff/sprites/rat/rat_dead.png" id="4_lkfmr"]
+[ext_resource type="Texture2D" uid="uid://cu30vauio6lm2" path="res://Art stuff/sprites/rat/rat_WITHAGUN_sheet.png" id="5_uklvj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8r4jg"]
+atlas = ExtResource("5_uklvj")
+region = Rect2(192, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_alm0c"]
+atlas = ExtResource("5_uklvj")
+region = Rect2(128, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dkop2"]
+atlas = ExtResource("5_uklvj")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0hhmt"]
+atlas = ExtResource("5_uklvj")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kph2p"]
+atlas = ExtResource("5_uklvj")
+region = Rect2(64, 0, 64, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y70ae"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_7iudx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_bvbpe")
+}, {
+"duration": 20.0,
+"texture": ExtResource("4_lkfmr")
+}],
+"loop": false,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.2,
+"texture": SubResource("AtlasTexture_8r4jg")
+}, {
+"duration": 3.0,
+"texture": SubResource("AtlasTexture_alm0c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dkop2")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0hhmt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kph2p")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f55mx"]
+size = Vector2(18, 25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bods4"]
+size = Vector2(26, 28)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_kp8ip")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_y70ae")
+animation = &"hit"
+
+[node name="PlayerCollision" type="CollisionShape2D" parent="."]
+position = Vector2(13, 3.5)
+shape = SubResource("RectangleShape2D_f55mx")
+
+[node name="BulletCollision" type="Area2D" parent="."]
+position = Vector2(16, 3)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BulletCollision"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_bods4")
+
+[connection signal="area_entered" from="BulletCollision" to="." method="_on_bullet_collision_area_entered"]
