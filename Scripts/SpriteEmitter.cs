@@ -41,7 +41,9 @@ public partial class SpriteEmitter : Node2D
 		var spriteScript = (SpriteAnim)spriteInstance;
 		spriteScript.xVel = xVelocity;
 		spriteInstance.Position = this.GlobalPosition;
-		GetTree().Root.GetChild(1).AddChild(spriteInstance);
+		//add it as a child of the current scene and not this Node. I feel like there should be a nicer way to do that, probably by getting the current scene from GameController. whatever it works for now.
+		//GetTree().Root.GetChild(1).AddChild(spriteInstance);
+		GetTree().CurrentScene.AddChild(spriteInstance);
 	}
 
 	public void OnPlayerJumped()

@@ -19,6 +19,7 @@ public partial class BlobPlayer : CharacterBody2D
 
 	public const float DEFAULT_TIMESCALE = 1.0f;
 	public float targetTimeScale = 1.0f;
+	public float timeScale = DEFAULT_TIMESCALE;
 	public float coyoteFrames = 0.0f;
 	public int jumps = 0;
 	public bool grounded = false;
@@ -50,6 +51,7 @@ public partial class BlobPlayer : CharacterBody2D
 		velocity = Velocity;
 		// Get gravity at the beginning of every frame
 		gravity = GetGravity();
+		timeScale = GameController.Instance.timeScale;
 		
 		// Check if grounded and handle gravity calculations on player velocity.
 		GroundedCheck((float)delta);
@@ -90,19 +92,19 @@ public partial class BlobPlayer : CharacterBody2D
 		else
 		{
 			grounded = false;
-			coyoteFrames = Math.Max(coyoteFrames-(1*GameController.Instance.timeScale),0);
+			coyoteFrames = Math.Max(coyoteFrames-(1*timeScale),0);
 			// Jump higher if jump button is held down and fall faster if jump is released
 			if (!jumpRelease && velocity.Y < 0)
 			{
-				velocity.Y += gravity.Y * delta * 0.8f * GameController.Instance.timeScale * GameController.Instance.timeScale;
+				velocity.Y += gravity.Y * delta * 0.8f * timeScale * timeScale;
 			}
 			else if (jumpRelease && velocity.Y < 100.0f)
 			{
-				velocity.Y += gravity.Y * delta * 2 * GameController.Instance.timeScale * GameController.Instance.timeScale;
+				velocity.Y += gravity.Y * delta * 2 * timeScale * timeScale;
 			}
 			else
 			{
-				velocity.Y += gravity.Y * delta * GameController.Instance.timeScale * GameController.Instance.timeScale;
+				velocity.Y += gravity.Y * delta * timeScale * timeScale;
 			}
 		}
 	}
@@ -125,13 +127,13 @@ public partial class BlobPlayer : CharacterBody2D
 				/*if (grounded)
 				{
 				}*/
-				velocity.Y = JUMP_VELOCITY * GameController.Instance.timeScale;
+				velocity.Y = JUMP_VELOCITY * timeScale;
 				EmitSignal(SignalName.PlayerJumped);
 				coyoteFrames = 0;
 			}
 			else
 			{
-				velocity.Y = JUMP_VELOCITY * 0.85f * GameController.Instance.timeScale;
+				velocity.Y = JUMP_VELOCITY * 0.85f * timeScale;
 			}
 		}
 		
@@ -159,16 +161,17 @@ public partial class BlobPlayer : CharacterBody2D
 		}
 		
 		// Gradually change timeScale depending on BULLETTIME_FRAMES
-		if (GameController.Instance.timeScale != targetTimeScale)
+		if (timeScale != targetTimeScale)
 		{
-			GameController.Instance.timeScale = Mathf.MoveToward(GameController.Instance.timeScale, targetTimeScale, (DEFAULT_TIMESCALE-DEFAULT_BULLETTIME)/BULLETTIME_FRAMES);
+			timeScale = Mathf.MoveToward(timeScale, targetTimeScale, (DEFAULT_TIMESCALE-DEFAULT_BULLETTIME)/BULLETTIME_FRAMES);
+			GameController.Instance.timeScale = timeScale;
 		}
 		
 		// Check if timeScale has changed and adjust velocity
-		if (GameController.Instance.timeScale != prevTimeScale)
+		if (timeScale != prevTimeScale)
 		{
-			velocity = velocity*(GameController.Instance.timeScale/prevTimeScale);
-			prevTimeScale = GameController.Instance.timeScale;
+			velocity = velocity*(timeScale/prevTimeScale);
+			prevTimeScale = timeScale;
 		}
 	}
 
@@ -180,7 +183,7 @@ public partial class BlobPlayer : CharacterBody2D
 		GameController.Instance.playerMovementDirection = facing;
 		if (direction!=0)
 		{
-			velocity.X = direction * SPEED * GameController.Instance.timeScale;
+			velocity.X = direction * SPEED * timeScale;
 			if (spriteX != facing && grounded)
 			{
 				if (facing == 1)
@@ -195,7 +198,7 @@ public partial class BlobPlayer : CharacterBody2D
 		}
 		else
 		{
-			velocity.X = Mathf.MoveToward(velocity.X, 0, SPEED/(5/GameController.Instance.timeScale/GameController.Instance.timeScale));
+			velocity.X = Mathf.MoveToward(velocity.X, 0, SPEED/(5/timeScale/timeScale));
 		}
 	}
 	

@@ -14,6 +14,8 @@ public partial class GameController : Node
 	public int ammoCur = 0;
 	public int ammoMax = 0;
 
+	//TODO PLAYERS SPAWN NODE SYSTEM!!!
+
 	private CanvasLayer PauseMenuNode;
 
 
@@ -56,9 +58,7 @@ public partial class GameController : Node
 
 		if (Input.IsActionJustPressed("game_pause"))
 		{
-			GetTree().Paused = !GetTree().Paused;
-			PauseMenuNode.Visible = GetTree().Paused;
-
+			TogglePause();
 		}
 
 
@@ -92,5 +92,25 @@ public partial class GameController : Node
 
 		// Optionally, to make it compatible with the SceneTree.change_scene_to_file() API.
 		GetTree().CurrentScene = CurrentScene;
+		RoomStart();
+
+	}
+
+	public void TogglePause()
+	{
+		Pause(!GetTree().Paused);
+	}
+
+	public void Pause(bool pause)
+	{
+		GetTree().Paused = pause;
+		PauseMenuNode.Visible = GetTree().Paused;
+	}
+
+	private void RoomStart()
+	{
+		playerPos = new Vector2(0,0);
+		Pause(false);
+
 	}
 }
