@@ -36,7 +36,7 @@ func _physics_process(delta):
 		scale.y = 1
 	
 	if $AnimatedSprite2D.get_animation() != "death" && $AnimatedSprite2D.get_animation() != "hit":
-		if playerDistance < 600 && playerDistance >= 300 && attackCooldown >= 5:
+		if playerDistance < 600 && playerDistance >= 300 && attackCooldown >= 3:
 			current_state = 2
 		elif playerDistance < 300:
 			current_state = 1
@@ -68,6 +68,7 @@ func _attack():
 	$AnimatedSprite2D.play("idle")
 	attackCooldown = 0
 	var instance = bullet.instantiate()
+	instance.set_position($ShootHole.get_position())
 	instance.set_collision_layer_value(2,false)
 	instance.set_collision_layer_value(3, true)
 	instance.set_linear_velocity(direction)

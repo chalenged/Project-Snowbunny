@@ -94,4 +94,7 @@ collision_mask = 2
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_bods4")
 
+[node name="ShootHole" type="Node2D" parent="."]
+position = Vector2(-13.368, 0.198807)
+
 [connection signal="area_entered" from="BulletCollision" to="." method="_on_bullet_collision_area_entered"]
