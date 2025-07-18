@@ -1,11 +1,13 @@
 using Godot;
 using System.Diagnostics;
+using System.Collections.Generic;
 using System;
 
 public partial class GameController : Node
 {
 	public static GameController Instance { get ; private set; }
 	public Node CurrentScene {get; set;}
+	public string CurrentSceneString = "";
 
 	public Vector2 playerPos {get; set;}
 	public int playerMovementDirection = 0;
@@ -15,6 +17,7 @@ public partial class GameController : Node
 	public int ammoMax = 0;
 
 	//TODO PLAYERS SPAWN NODE SYSTEM!!!
+	public List<Node2D> SpawnNodeList = new List<Node2D>();
 
 	private CanvasLayer PauseMenuNode;
 
@@ -38,8 +41,9 @@ public partial class GameController : Node
 
 		PauseMenuNode = GetNode<CanvasLayer>("PauseMenu");
 		PauseMenuNode.Visible = false;
-		
 
+		CurrentSceneString = GetTree().CurrentScene.SceneFilePath;
+		GotoScene(CurrentSceneString);
 
 	}
 
@@ -53,7 +57,7 @@ public partial class GameController : Node
 
 		if (Input.IsActionJustPressed("scene_reload"))
 		{
-			GetTree().ReloadCurrentScene();
+			GotoScene(CurrentSceneString);
 		}
 
 		if (Input.IsActionJustPressed("game_pause"))
@@ -81,6 +85,10 @@ public partial class GameController : Node
 		// It is now safe to remove the current scene.
 		CurrentScene.Free();
 
+		CurrentSceneString = path;
+
+		SpawnNodeList.Clear();
+
 		// Load a new scene.
 		var nextScene = GD.Load<PackedScene>(path);
 
@@ -93,7 +101,6 @@ public partial class GameController : Node
 		// Optionally, to make it compatible with the SceneTree.change_scene_to_file() API.
 		GetTree().CurrentScene = CurrentScene;
 		RoomStart();
-
 	}
 
 	public void TogglePause()
@@ -109,8 +116,14 @@ public partial class GameController : Node
 
 	private void RoomStart()
 	{
+		CallDeferred(MethodName.DeferredRoomStart);
+	}
+
+	private void DeferredRoomStart()
+	{
 		playerPos = new Vector2(0,0);
 		Pause(false);
+		GD.Print("Room has started!");
 
 	}
 }

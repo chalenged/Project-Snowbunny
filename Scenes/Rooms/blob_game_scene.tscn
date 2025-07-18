@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://br5fsyterbkai"]
+[gd_scene load_steps=10 format=4 uid="uid://br5fsyterbkai"]
 
 [ext_resource type="Texture2D" uid="uid://cjdx4b06mh7cw" path="res://Art stuff/sprites/world/sky_blank.png" id="1_es2en"]
 [ext_resource type="Texture2D" uid="uid://b7fsnkket5ndt" path="res://Art stuff/sprites/world/sky_clouds_close.png" id="2_r177t"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dvw0qb86s1ie" path="res://Art stuff/sprites/world/world2_all.png" id="4_da37l"]
 [ext_resource type="PackedScene" uid="uid://dlykafkvaf50d" path="res://Scenes/blob_player.tscn" id="5_4cuv6"]
 [ext_resource type="PackedScene" uid="uid://dit6oeklskwin" path="res://Scenes/GunBase.tscn" id="6_dtcjh"]
+[ext_resource type="PackedScene" uid="uid://rtek4ebjknr8" path="res://Scenes/player_spawn_node.tscn" id="7_r177t"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8bfnp"]
 texture = ExtResource("4_da37l")
@@ -458,7 +459,7 @@ tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_8bfnp")
 
-[node name="BlobGameScene2" type="Node2D"]
+[node name="BlobGameScene" type="Node2D"]
 
 [node name="Skybox" type="Sprite2D" parent="."]
 position = Vector2(-40, -452)
@@ -486,3 +487,9 @@ position_smoothing_enabled = true
 position_smoothing_speed = 3.0
 
 [node name="GunBase" parent="BlobPlayer2" instance=ExtResource("6_dtcjh")]
+
+[node name="PlayerSpawnNode" parent="." instance=ExtResource("7_r177t")]
+position = Vector2(-608, -288)
+
+[node name="PlayerSpawnNode2" parent="." instance=ExtResource("7_r177t")]
+position = Vector2(-64, -320)
