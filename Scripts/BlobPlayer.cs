@@ -30,6 +30,7 @@ public partial class BlobPlayer : CharacterBody2D
 	public Vector2 velocity;
 	public int facing = 1;
 	public int spriteX = 1;
+	public int health = 10;
 		
 
 
@@ -44,15 +45,15 @@ public partial class BlobPlayer : CharacterBody2D
 		//JumpParticleNode.EmitFlags = 8;
 		GameController.Instance.timeScale = DEFAULT_TIMESCALE;
 	}
-	
-	
+
+
 	public override void _PhysicsProcess(double delta)
 	{
 		velocity = Velocity;
 		// Get gravity at the beginning of every frame
 		gravity = GetGravity();
 		timeScale = GameController.Instance.timeScale;
-		
+
 		// Check if grounded and handle gravity calculations on player velocity.
 		GroundedCheck((float)delta);
 
@@ -74,9 +75,15 @@ public partial class BlobPlayer : CharacterBody2D
 
 		// Set player position global variable
 		GameController.Instance.playerPos = this.Position;
+		
+		
 	}
 
-
+	public void _on_hurt_box_area_entered()
+		{
+			health = --health;
+			GD.Print(health);
+		}
 
 
 	public void GroundedCheck(float delta)
