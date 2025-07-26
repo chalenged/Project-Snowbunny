@@ -92,6 +92,7 @@ func death():
 	$AnimatedSprite2D.play("death")
 	velocity.x = randf_range(50,100) * -direction.x
 	set_collision_layer_value(1, false)
+	set_collision_layer_value(2, false)
 	$BulletCollision.set_collision_mask_value(2, false)
 	await get_tree().create_timer(1.0).timeout
 	queue_free()

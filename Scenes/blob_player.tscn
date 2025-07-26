@@ -9,7 +9,7 @@
 size = Vector2(30, 31)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_npw5o"]
-size = Vector2(30, 31)
+size = Vector2(32, 32)
 
 [node name="BlobPlayer" type="CharacterBody2D"]
 script = ExtResource("1_npw5o")
@@ -24,11 +24,11 @@ shape = SubResource("RectangleShape2D_s4le7")
 [node name="SpriteEmitter" parent="." instance=ExtResource("3_npw5o")]
 
 [node name="Area2D" type="Area2D" parent="."]
+disable_mode = 2
 collision_layer = 4
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_npw5o")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -38,4 +38,4 @@ limit_smoothed = true
 [node name="GunBase" parent="." instance=ExtResource("4_k2lrx")]
 
 [connection signal="PlayerJumped" from="." to="SpriteEmitter" method="OnPlayerJumped"]
-[connection signal="area_entered" from="Area2D" to="." method="_on_hurt_box_area_entered"]
+[connection signal="area_entered" from="Area2D" to="." method="OnHurtBoxAreaEntered"]

@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=4 uid="uid://d20tx2c4t0ut1"]
+[gd_scene load_steps=9 format=4 uid="uid://d20tx2c4t0ut1"]
 
 [ext_resource type="Texture2D" uid="uid://cjdx4b06mh7cw" path="res://Art stuff/sprites/world/sky_blank.png" id="1_7p6w6"]
 [ext_resource type="Texture2D" uid="uid://b7fsnkket5ndt" path="res://Art stuff/sprites/world/sky_clouds_close.png" id="2_k5yej"]
-[ext_resource type="PackedScene" uid="uid://dlykafkvaf50d" path="res://Scenes/blob_player.tscn" id="3_u7fbm"]
-[ext_resource type="PackedScene" uid="uid://dit6oeklskwin" path="res://Scenes/GunBase.tscn" id="4_pfuk2"]
 [ext_resource type="PackedScene" uid="uid://cvlosuhdlyjoy" path="res://Scenes/blob_test_tiles.tscn" id="5_g1fhb"]
+[ext_resource type="PackedScene" uid="uid://rtek4ebjknr8" path="res://Scenes/player_spawn_node.tscn" id="6_7p6w6"]
 [ext_resource type="Texture2D" uid="uid://dvw0qb86s1ie" path="res://Art stuff/sprites/world/world2_all.png" id="6_q6ltu"]
 [ext_resource type="PackedScene" uid="uid://df6y1u6ayf12b" path="res://Scenes/enemy_rat.tscn" id="7_k5yej"]
 
@@ -459,7 +458,7 @@ tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_8bfnp")
 
-[node name="BlobGameScene" type="Node2D"]
+[node name="MGameScene" type="Node2D"]
 
 [node name="Skybox" type="Sprite2D" parent="."]
 position = Vector2(-40, -452)
@@ -471,18 +470,6 @@ texture = ExtResource("2_k5yej")
 [node name="SkyCloudsClose" type="Sprite2D" parent="Skybox"]
 texture = ExtResource("2_k5yej")
 
-[node name="BlobPlayer" parent="." instance=ExtResource("3_u7fbm")]
-position = Vector2(32, -64)
-collision_layer = 4
-
-[node name="Camera2D" type="Camera2D" parent="BlobPlayer"]
-position = Vector2(-4, 45)
-limit_bottom = 64
-position_smoothing_enabled = true
-position_smoothing_speed = 3.0
-
-[node name="GunBase" parent="BlobPlayer" instance=ExtResource("4_pfuk2")]
-
 [node name="enemyRat" parent="." instance=ExtResource("7_k5yej")]
 position = Vector2(451, -218)
 
@@ -492,3 +479,6 @@ tile_map_data = PackedByteArray("AADv////AAAAAAAAAADv/wAAAAAAAAEAAADv/wEAAAAAAAI
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AADz////AAAKAAQAAADw////AAAKAAQAAADw/wAAAAAMAAEAAAACAAAAAAAQAAUAAAABAAAAAAAMAAQAAAAFAAAAAAAEAAgAAAAEAAAAAAATAAUAAAADAAAAAAASAAoAAAAEAAEAAAABAAgAAAADAAEAAAAIAAMAAAACAAEAAAAEAAQAAADz/wAAAAAOAAEAAAD0/wAAAAAOAAUAAADy/wAAAAAUAAEAAADv/wAAAAAQAAEAAADx/wAAAAAWAAUAAADz/wEAAAAOAAIAAADw/wEAAAAMAAIAAAA=")
 tile_set = SubResource("TileSet_5qwsd")
+
+[node name="PlayerSpawnNode" parent="." instance=ExtResource("6_7p6w6")]
+position = Vector2(-83, -208)

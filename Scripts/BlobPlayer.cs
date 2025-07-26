@@ -31,7 +31,9 @@ public partial class BlobPlayer : CharacterBody2D
 	public int facing = 1;
 	public int spriteX = 1;
 	public int health = 10;
-		
+	public int damageCooldown = 0;
+	public const int maxDamageCooldown = 50;
+	
 
 
 
@@ -72,18 +74,17 @@ public partial class BlobPlayer : CharacterBody2D
 		//Apply calculated velocity to player
 		Velocity = velocity;
 		MoveAndSlide();
-
+		
+		//Check if ur dying
+		HitCheck();
+		
 		// Set player position global variable
 		GameController.Instance.playerPos = this.Position;
 		
-		
+		//I-frame checkkkk
+		damageCooldown = Math.Max(0,damageCooldown-1);
 	}
 
-	public void _on_hurt_box_area_entered()
-		{
-			health = --health;
-			GD.Print(health);
-		}
 
 
 	public void GroundedCheck(float delta)
@@ -207,6 +208,19 @@ public partial class BlobPlayer : CharacterBody2D
 		{
 			velocity.X = Mathf.MoveToward(velocity.X, 0, SPEED/(5/timeScale/timeScale));
 		}
+	}
+	
+	public void HitCheck()
+	{
+		var Hurtbox = GetNode<Area2D>("Area2D");
+		var AreaList = Hurtbox.GetOverlappingAreas();
+		if (AreaList.Count != 0 && damageCooldown == 0)
+		{
+			--health;
+			GD.Print(health);
+			damageCooldown = maxDamageCooldown;
+		}
+		AreaList.Clear();
 	}
 	
 }
