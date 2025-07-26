@@ -16,7 +16,6 @@ public partial class BlobPlayer : CharacterBody2D
 	public float DEFAULT_BULLETTIME = 0.3f;
 	[Export]
 	public int BULLETTIME_FRAMES = 15;
-
 	public const float DEFAULT_TIMESCALE = 1.0f;
 	public float targetTimeScale = 1.0f;
 	public float timeScale = DEFAULT_TIMESCALE;
@@ -46,11 +45,13 @@ public partial class BlobPlayer : CharacterBody2D
 		this.AddToGroup("player", true); //Adds to group for easier reference, can use GetTree().GetFirstNodeInGroup("player") in any script to find player (will return nill if no player!!!)
 		//JumpParticleNode.EmitFlags = 8;
 		GameController.Instance.timeScale = DEFAULT_TIMESCALE;
-	}
+        GameController.Instance.DamagePlayer += HitCheck;
+    }
 
 
 	public override void _PhysicsProcess(double delta)
 	{
+
 		velocity = Velocity;
 		// Get gravity at the beginning of every frame
 		gravity = GetGravity();
@@ -75,16 +76,24 @@ public partial class BlobPlayer : CharacterBody2D
 		Velocity = velocity;
 		MoveAndSlide();
 		
-		//Check if ur dying
-		HitCheck();
 		
 		// Set player position global variable
 		GameController.Instance.playerPos = this.Position;
+		GameController.Instance.PlayerHealth = health;
 		
 		//I-frame checkkkk
 		damageCooldown = Math.Max(0,damageCooldown-1);
 	}
 
+    public override void _Process(double delta)
+    {
+        
+		//Check if ur dying
+		//HitCheck();
+    }
+
+
+    
 
 
 	public void GroundedCheck(float delta)
@@ -127,6 +136,7 @@ public partial class BlobPlayer : CharacterBody2D
 		// Handle jump.
 		if (Input.IsActionJustPressed("ui_accept") && jumps>0)
 		{
+        //GameController.Instance.EmitSignal(GameController.SignalName.DamagePlayer, 1);
 			jumpRelease = false;
 			jumps = Math.Max(jumps-1,0);
 			if (coyoteFrames>0)
@@ -210,17 +220,15 @@ public partial class BlobPlayer : CharacterBody2D
 		}
 	}
 	
-	public void HitCheck()
+	public void HitCheck(int damage)
 	{
-		var Hurtbox = GetNode<Area2D>("Area2D");
-		var AreaList = Hurtbox.GetOverlappingAreas();
-		if (AreaList.Count != 0 && damageCooldown == 0)
+        GD.Print("?");
+        if (damageCooldown == 0)
 		{
-			--health;
+			health-=damage;
 			GD.Print(health);
 			damageCooldown = maxDamageCooldown;
 		}
-		AreaList.Clear();
 	}
 	
 }

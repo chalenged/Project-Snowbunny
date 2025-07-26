@@ -5,6 +5,8 @@ using System;
 
 public partial class GameController : Node
 {
+	[Signal]
+	public delegate void DamagePlayerEventHandler(int damage);
 	public static GameController Instance { get ; private set; }
 	public Node CurrentScene {get; set;}
 	public string CurrentSceneString = "";
@@ -13,6 +15,7 @@ public partial class GameController : Node
 	public int playerMovementDirection = 0;
 	public float timeScale = 0.0f;
 	public int TargetPlayerSpawn = 0;
+	public int PlayerHealth = 0;
 
 	public int ammoCur = 0;
 	public int ammoMax = 0;
@@ -23,12 +26,16 @@ public partial class GameController : Node
 	private CanvasLayer PauseMenuNode;
 	//private PackedScene PlayerScene;
 
-
+	public void DoIt(int damage) {
+        GD.Print("BLEH?");
+    }
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		Viewport root = GetTree().Root;
+        DamagePlayer += DoIt;
+        EmitSignal(SignalName.DamagePlayer, 1);
+        Viewport root = GetTree().Root;
 		CurrentScene = root.GetChild(-1);
 		Instance = this;
 		playerPos = new Vector2(0,0);
@@ -60,6 +67,7 @@ public partial class GameController : Node
 
 		if (Input.IsActionJustPressed("scene_reload"))
 		{
+        EmitSignal(SignalName.DamagePlayer, 1);
 			GotoScene(CurrentSceneString);
 		}
 

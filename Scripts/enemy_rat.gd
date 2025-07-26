@@ -1,6 +1,5 @@
 extends CharacterBody2D
 
-
 const SPEED = 100.0
 var gravity: Vector2
 var current_state
@@ -13,7 +12,7 @@ var attackCooldown = 0
 #runs when scene is loaded for the first time
 func _ready():
 	#disable attack hurtbox and hide attack sprite
-	$TestAttackHurtbox.set_collision_mask_value(3, false)
+	$TestAttackHurtbox.set_collision_mask_value(3, true)
 	$AnimatedSprite2D.play("idle")
 	
 func _physics_process(delta): 
@@ -36,6 +35,12 @@ func _physics_process(delta):
 		rotation_degrees = 0
 		scale.y = 1
 	
+	if (current_state == 2):
+		var areaList = $TestAttackHurtbox.get_overlapping_areas()
+		if (areaList.size() > 0):
+			print(areaList);
+			$"/root/GameController".DamagePlayer.emit(1)
+
 	#check if player is between 300 and 50 pixels, moves towards player if they are
 	if $AnimatedSprite2D.get_animation() != "death" && $AnimatedSprite2D/AnimationPlayer.get_current_animation() != "attackAnimation":
 		if (playerDistance <= 300 and playerDistance > 35):

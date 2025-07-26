@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dlykafkvaf50d"]
 
 [ext_resource type="Script" uid="uid://bbntd1y06o31c" path="res://Scripts/BlobPlayer.cs" id="1_npw5o"]
-[ext_resource type="Texture2D" uid="uid://bqdha0cvjg71y" path="res://Art stuff/sprites/tile_default.png" id="1_y1l2b"]
+[ext_resource type="Texture2D" path="res://Art stuff/sprites/tile_default.png" id="1_y1l2b"]
 [ext_resource type="PackedScene" uid="uid://dm71ksyvbwob1" path="res://Scenes/sprite_emitter.tscn" id="3_npw5o"]
 [ext_resource type="PackedScene" uid="uid://dit6oeklskwin" path="res://Scenes/GunBase.tscn" id="4_k2lrx"]
 

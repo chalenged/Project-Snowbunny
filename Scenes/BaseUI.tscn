@@ -24,6 +24,7 @@ fit_content = true
 [node name="HealthBar" type="ProgressBar" parent="VBoxContainer"]
 custom_minimum_size = Vector2(0, 22.055)
 layout_mode = 2
+max_value = 10.0
 show_percentage = false
 
 [node name="Ammo" type="RichTextLabel" parent="VBoxContainer"]

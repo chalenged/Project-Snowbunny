@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://cs6sjv58xgj4a"]
+[gd_scene load_steps=11 format=4 uid="uid://cs6sjv58xgj4a"]
 
 [ext_resource type="Texture2D" uid="uid://cjdx4b06mh7cw" path="res://Art stuff/sprites/world/sky_blank.png" id="1_o7ede"]
 [ext_resource type="Texture2D" uid="uid://b7fsnkket5ndt" path="res://Art stuff/sprites/world/sky_clouds_close.png" id="2_svj71"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://df6y1u6ayf12b" path="res://Scenes/enemy_rat.tscn" id="5_rjw3w"]
 [ext_resource type="PackedScene" uid="uid://cvlosuhdlyjoy" path="res://Scenes/blob_test_tiles.tscn" id="6_qebns"]
 [ext_resource type="Texture2D" uid="uid://dvw0qb86s1ie" path="res://Art stuff/sprites/world/world2_all.png" id="7_ptc6c"]
+[ext_resource type="PackedScene" uid="uid://5t8nq4sqbkox" path="res://Scenes/BaseUI.tscn" id="8_svj71"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8bfnp"]
 texture = ExtResource("7_ptc6c")
@@ -475,13 +476,13 @@ texture = ExtResource("2_svj71")
 position = Vector2(32, -64)
 collision_layer = 4
 
-[node name="Camera2D" type="Camera2D" parent="BlobPlayer"]
+[node name="Camera2D2" type="Camera2D" parent="BlobPlayer"]
 position = Vector2(-4, 45)
 limit_bottom = 64
 position_smoothing_enabled = true
 position_smoothing_speed = 3.0
 
-[node name="GunBase" parent="BlobPlayer" instance=ExtResource("4_0bv1y")]
+[node name="GunBase2" parent="BlobPlayer" instance=ExtResource("4_0bv1y")]
 
 [node name="enemyRat" parent="." instance=ExtResource("5_rjw3w")]
 position = Vector2(451, -218)
@@ -492,3 +493,7 @@ tile_map_data = PackedByteArray("AADv////AAAAAAAAAADv/wAAAAAAAAEAAADv/wEAAAAAAAI
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AADz////AAAKAAQAAADw////AAAKAAQAAADw/wAAAAAMAAEAAAACAAAAAAAQAAUAAAABAAAAAAAMAAQAAAAFAAAAAAAEAAgAAAAEAAAAAAATAAUAAAADAAAAAAASAAoAAAAEAAEAAAABAAgAAAADAAEAAAAIAAMAAAACAAEAAAAEAAQAAADz/wAAAAAOAAEAAAD0/wAAAAAOAAUAAADy/wAAAAAUAAEAAADv/wAAAAAQAAEAAADx/wAAAAAWAAUAAADz/wEAAAAOAAIAAADw/wEAAAAMAAIAAAA=")
 tile_set = SubResource("TileSet_5qwsd")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="BaseUi" parent="CanvasLayer" instance=ExtResource("8_svj71")]

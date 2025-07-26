@@ -178,6 +178,8 @@ size = Vector2(19, 26)
 size = Vector2(32, 10)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
+physics_interpolation_mode = 1
+disable_mode = 2
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_hq70o")
@@ -206,6 +208,7 @@ shape = SubResource("RectangleShape2D_hq70o")
 
 [node name="TestAttackHurtbox" type="Area2D" parent="."]
 position = Vector2(-4, 2)
+disable_mode = 2
 collision_layer = 4
 collision_mask = 0
 

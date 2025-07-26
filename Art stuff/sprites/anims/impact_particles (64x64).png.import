@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bqdha0cvjg71y"
-path="res://.godot/imported/tile_default.png-be355a13db795a6095bf6ff403557264.ctex"
+uid="uid://c4h1vbisyqtbj"
+path="res://.godot/imported/impact_particles (64x64).png-7b2f77243bdf1d3dd6d1295993c78f80.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art stuff/sprites/characters/tile_default.png"
-dest_files=["res://.godot/imported/tile_default.png-be355a13db795a6095bf6ff403557264.ctex"]
+source_file="res://Art stuff/sprites/anims/impact_particles (64x64).png"
+dest_files=["res://.godot/imported/impact_particles (64x64).png-7b2f77243bdf1d3dd6d1295993c78f80.ctex"]
 
 [params]
 

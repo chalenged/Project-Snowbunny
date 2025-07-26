@@ -8,6 +8,7 @@
 script = ExtResource("1_p4xu2")
 fireRate = 0.05
 speed = 1500.0
+reloadSpeed = 1.0
 inaccuracy = 45.0
 reload = ExtResource("2_8k71m")
 
