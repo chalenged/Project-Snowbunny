@@ -1,11 +1,9 @@
-[gd_scene load_steps=10 format=4 uid="uid://br5fsyterbkai"]
+[gd_scene load_steps=8 format=4 uid="uid://br5fsyterbkai"]
 
 [ext_resource type="Texture2D" uid="uid://cjdx4b06mh7cw" path="res://Art stuff/sprites/world/sky_blank.png" id="1_es2en"]
 [ext_resource type="Texture2D" uid="uid://b7fsnkket5ndt" path="res://Art stuff/sprites/world/sky_clouds_close.png" id="2_r177t"]
 [ext_resource type="PackedScene" uid="uid://cvlosuhdlyjoy" path="res://Scenes/blob_test_tiles.tscn" id="3_tvngi"]
 [ext_resource type="Texture2D" uid="uid://dvw0qb86s1ie" path="res://Art stuff/sprites/world/world2_all.png" id="4_da37l"]
-[ext_resource type="PackedScene" uid="uid://dlykafkvaf50d" path="res://Scenes/blob_player.tscn" id="5_4cuv6"]
-[ext_resource type="PackedScene" uid="uid://dit6oeklskwin" path="res://Scenes/GunBase.tscn" id="6_dtcjh"]
 [ext_resource type="PackedScene" uid="uid://rtek4ebjknr8" path="res://Scenes/player_spawn_node.tscn" id="7_r177t"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8bfnp"]
@@ -478,18 +476,8 @@ tile_map_data = PackedByteArray("AADv////AAAAAAAAAADv/wAAAAAAAAEAAADv/wEAAAAAAAI
 tile_map_data = PackedByteArray("AADw//r/AAAUAAAAAADw//v/AAAUAAEAAADw//z/AAAUAAIAAADx//r/AAAVAAAAAADx//v/AAAVAAEAAADx//z/AAAVAAIAAADy//r/AAAWAAAAAADy//v/AAAWAAEAAADy//z/AAAWAAIAAAD0//v/AAAUAAAAAAD0//z/AAAUAAEAAAD0//3/AAAUAAIAAAD1//v/AAAVAAAAAAD1//z/AAAbAAMAAAD1//3/AAAVAAIAAAD2//v/AAAWAAAAAAD2//z/AAAWAAEAAAD2//3/AAAWAAIAAAD3//j/AAAUAAAAAAD3//n/AAAUAAEAAAD3//r/AAAUAAIAAAD4//j/AAAVAAAAAAD4//n/AAAFAAEAAAD4//r/AAAVAAIAAAD5//j/AAAWAAAAAAD5//n/AAAWAAEAAAD5//r/AAAWAAIAAAACAPr/AAAUAAAAAAACAPv/AAAUAAEAAAACAPz/AAAUAAIAAAADAPr/AAAVAAAAAAADAPv/AAAVAAEAAAADAPz/AAAJAAMAAAAEAPr/AAAWAAAAAAAEAPv/AAAWAAEAAAAEAPz/AAAWAAIAAAD6//r/AAAUAAAAAAD6//v/AAAUAAEAAAD6//z/AAAUAAIAAAD7//r/AAAVAAAAAAD7//v/AAASAAEAAAD7//z/AAAVAAIAAAD8//r/AAAWAAAAAAD8//v/AAAWAAEAAAD8//z/AAAWAAIAAADz////AAAKAAQAAADw////AAAKAAQAAADw/wAAAAAMAAEAAAAEAP7/AAASAAAAAAAEAP//AAARAAQAAAADAP7/AAAVAAAAAAADAP//AAASAAkAAAACAP7/AAARAAAAAAACAP//AAAAAAEAAAABAP7/AAAQAAAAAAABAP//AAAQAAEAAAAFAP7/AAATAAAAAAAFAP//AAATAAEAAAACAAAAAAAQAAUAAAABAAAAAAAMAAQAAAAFAAAAAAAEAAgAAAAEAAAAAAATAAUAAAADAAAAAAASAAoAAAAEAAEAAAABAAgAAAADAAEAAAAIAAMAAAACAAEAAAAEAAQAAADz/wAAAAAOAAEAAAD0/wAAAAAOAAUAAADy/wAAAAAUAAEAAADv/wAAAAAQAAEAAADx/wAAAAAWAAUAAADz/wEAAAAOAAIAAADw/wEAAAAMAAIAAAA=")
 tile_set = SubResource("TileSet_5qwsd")
 
-[node name="BlobPlayer2" parent="." instance=ExtResource("5_4cuv6")]
-
-[node name="Camera2D" type="Camera2D" parent="BlobPlayer2"]
-position = Vector2(28, -19)
-limit_bottom = 64
-position_smoothing_enabled = true
-position_smoothing_speed = 3.0
-
-[node name="GunBase" parent="BlobPlayer2" instance=ExtResource("6_dtcjh")]
-
 [node name="PlayerSpawnNode" parent="." instance=ExtResource("7_r177t")]
-position = Vector2(-608, -288)
+position = Vector2(-416, -224)
 
 [node name="PlayerSpawnNode2" parent="." instance=ExtResource("7_r177t")]
 position = Vector2(-64, -320)

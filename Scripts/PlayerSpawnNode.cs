@@ -6,7 +6,9 @@ public partial class PlayerSpawnNode : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		GD.Print("Spawn node ready!");
+		//GD.Print("Spawn node ready!");
+		GameController.Instance.SpawnNodeList.Add((Node2D)this);
+		//GD.Print(GameController.Instance.SpawnNodeList.Count);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

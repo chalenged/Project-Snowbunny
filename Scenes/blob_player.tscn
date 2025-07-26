@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dlykafkvaf50d"]
+[gd_scene load_steps=7 format=3 uid="uid://dlykafkvaf50d"]
 
 [ext_resource type="Script" uid="uid://bbntd1y06o31c" path="res://Scripts/BlobPlayer.cs" id="1_npw5o"]
 [ext_resource type="Texture2D" uid="uid://bqdha0cvjg71y" path="res://Art stuff/sprites/tile_default.png" id="1_y1l2b"]
 [ext_resource type="PackedScene" uid="uid://dm71ksyvbwob1" path="res://Scenes/sprite_emitter.tscn" id="3_npw5o"]
+[ext_resource type="PackedScene" uid="uid://dit6oeklskwin" path="res://Scenes/GunBase.tscn" id="4_k2lrx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s4le7"]
 size = Vector2(30, 31)
@@ -29,6 +30,12 @@ collision_mask = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_npw5o")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_bottom = 100
+limit_smoothed = true
+
+[node name="GunBase" parent="." instance=ExtResource("4_k2lrx")]
 
 [connection signal="PlayerJumped" from="." to="SpriteEmitter" method="OnPlayerJumped"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_hurt_box_area_entered"]

@@ -12,6 +12,7 @@ public partial class GameController : Node
 	public Vector2 playerPos {get; set;}
 	public int playerMovementDirection = 0;
 	public float timeScale = 0.0f;
+	public int TargetPlayerSpawn = 0;
 
 	public int ammoCur = 0;
 	public int ammoMax = 0;
@@ -20,6 +21,7 @@ public partial class GameController : Node
 	public List<Node2D> SpawnNodeList = new List<Node2D>();
 
 	private CanvasLayer PauseMenuNode;
+	//private PackedScene PlayerScene;
 
 
 
@@ -30,6 +32,7 @@ public partial class GameController : Node
 		CurrentScene = root.GetChild(-1);
 		Instance = this;
 		playerPos = new Vector2(0,0);
+		var PlayerScene = ResourceLoader.Load<PackedScene>("res://Scenes/blob_player.tscn").Instantiate();
 
 		// Make Game Controller unpausable.
 		ProcessMode = Node.ProcessModeEnum.Always;
@@ -121,9 +124,17 @@ public partial class GameController : Node
 
 	private void DeferredRoomStart()
 	{
+		var PlayerInstance = ResourceLoader.Load<PackedScene>("res://Scenes/blob_player.tscn").Instantiate();
 		playerPos = new Vector2(0,0);
 		Pause(false);
 		GD.Print("Room has started!");
+		GD.Print(SpawnNodeList.Count + " Spawn nodes found!");
+		var PlayerNode2D = (Node2D)PlayerInstance;
+		PlayerNode2D.Position = SpawnNodeList[TargetPlayerSpawn].GlobalPosition;
+		GetTree().CurrentScene.AddChild(PlayerInstance);
+		
+		
+
 
 	}
 }
