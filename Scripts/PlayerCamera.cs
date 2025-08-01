@@ -9,6 +9,7 @@ public partial class PlayerCamera : Camera2D
 
 	[Export]
 	private float cameraSpeed = 1.5f;
+	[Export]
 	private float minCameraSpeed = 0.3f;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
