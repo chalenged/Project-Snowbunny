@@ -8,10 +8,11 @@ public partial class GameController : Node
 	[Signal]
 	public delegate void DamagePlayerEventHandler(int damage);
 	public static GameController Instance { get ; private set; }
-	public Node CurrentScene {get; set;}
+	public Node CurrentScene;
 	public string CurrentSceneString = "";
 
-	public Vector2 playerPos {get; set;}
+	public Vector2 playerPos;
+	public Vector2 cameraPos;
 	public int playerMovementDirection = 0;
 	public float timeScale = 0.0f;
 	public int TargetPlayerSpawn = 0;
@@ -39,7 +40,7 @@ public partial class GameController : Node
 		CurrentScene = root.GetChild(-1);
 		Instance = this;
 		playerPos = new Vector2(0,0);
-		var PlayerScene = ResourceLoader.Load<PackedScene>("res://Scenes/blob_player.tscn").Instantiate();
+		//var PlayerScene = ResourceLoader.Load<PackedScene>("res://Scenes/blob_player.tscn").Instantiate();
 
 		// Make Game Controller unpausable.
 		ProcessMode = Node.ProcessModeEnum.Always;
@@ -67,7 +68,7 @@ public partial class GameController : Node
 
 		if (Input.IsActionJustPressed("scene_reload"))
 		{
-        EmitSignal(SignalName.DamagePlayer, 1);
+        	EmitSignal(SignalName.DamagePlayer, 1);
 			GotoScene(CurrentSceneString);
 		}
 
@@ -133,13 +134,18 @@ public partial class GameController : Node
 	private void DeferredRoomStart()
 	{
 		var PlayerInstance = ResourceLoader.Load<PackedScene>("res://Scenes/blob_player.tscn").Instantiate();
+		var CameraInstance = ResourceLoader.Load<PackedScene>("res://Scenes/player_camera.tscn").Instantiate();
 		playerPos = new Vector2(0,0);
 		Pause(false);
 		GD.Print("Room has started!");
 		GD.Print(SpawnNodeList.Count + " Spawn nodes found!");
 		var PlayerNode2D = (Node2D)PlayerInstance;
-		PlayerNode2D.Position = SpawnNodeList[TargetPlayerSpawn].GlobalPosition;
+		var CameraNode2D = (Node2D)CameraInstance;
+		var SpawnPosition = SpawnNodeList[TargetPlayerSpawn].GlobalPosition;
+		PlayerNode2D.Position = SpawnPosition;
+		CameraNode2D.Position = SpawnPosition;
 		GetTree().CurrentScene.AddChild(PlayerInstance);
+		GetTree().CurrentScene.AddChild(CameraInstance);
 		
 		
 

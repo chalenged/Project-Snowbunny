@@ -45,8 +45,8 @@ public partial class BlobPlayer : CharacterBody2D
 		this.AddToGroup("player", true); //Adds to group for easier reference, can use GetTree().GetFirstNodeInGroup("player") in any script to find player (will return nill if no player!!!)
 		//JumpParticleNode.EmitFlags = 8;
 		GameController.Instance.timeScale = DEFAULT_TIMESCALE;
-        GameController.Instance.DamagePlayer += HitCheck;
-    }
+		GameController.Instance.DamagePlayer += HitCheck;
+	}
 
 
 	public override void _PhysicsProcess(double delta)
@@ -85,15 +85,15 @@ public partial class BlobPlayer : CharacterBody2D
 		damageCooldown = Math.Max(0,damageCooldown-1);
 	}
 
-    public override void _Process(double delta)
-    {
-        
+	public override void _Process(double delta)
+	{
+		
 		//Check if ur dying
 		//HitCheck();
-    }
+	}
 
 
-    
+	
 
 
 	public void GroundedCheck(float delta)
@@ -136,7 +136,7 @@ public partial class BlobPlayer : CharacterBody2D
 		// Handle jump.
 		if (Input.IsActionJustPressed("ui_accept") && jumps>0)
 		{
-        //GameController.Instance.EmitSignal(GameController.SignalName.DamagePlayer, 1);
+		//GameController.Instance.EmitSignal(GameController.SignalName.DamagePlayer, 1);
 			jumpRelease = false;
 			jumps = Math.Max(jumps-1,0);
 			if (coyoteFrames>0)
@@ -222,8 +222,8 @@ public partial class BlobPlayer : CharacterBody2D
 	
 	public void HitCheck(int damage)
 	{
-        GD.Print("?");
-        if (damageCooldown == 0)
+		GD.Print("?");
+		if (damageCooldown == 0)
 		{
 			health-=damage;
 			GD.Print(health);

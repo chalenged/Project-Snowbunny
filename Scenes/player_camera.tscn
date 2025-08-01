@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dp528naecfobd"]
+
+[ext_resource type="Script" uid="uid://b1lsv4nbq2oqr" path="res://Scripts/PlayerCamera.cs" id="1_asj12"]
+
+[node name="PlayerCamera" type="Camera2D"]
+limit_bottom = 100
+limit_smoothed = true
+position_smoothing_speed = 0.5
+script = ExtResource("1_asj12")
+cameraSpeed = 3.0

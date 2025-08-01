@@ -481,7 +481,7 @@ limit_bottom = 64
 position_smoothing_enabled = true
 position_smoothing_speed = 3.0
 
-[node name="GunBase" parent="BlobPlayer" instance=ExtResource("4_fddqa")]
+[node name="GunBase2" parent="BlobPlayer" instance=ExtResource("4_fddqa")]
 speed = 1000.0
 
 [node name="BlobTestTiles" parent="." instance=ExtResource("5_ykl3g")]

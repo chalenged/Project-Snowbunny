@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://cmcp52fove22v"]
+
+[ext_resource type="Texture2D" uid="uid://cjdx4b06mh7cw" path="res://Art stuff/sprites/world/sky_blank.png" id="2_xxqhh"]
+[ext_resource type="Script" uid="uid://1knotjkats6x" path="res://Scripts/BackgroundLayer.cs" id="3_k5v6k"]
+[ext_resource type="Texture2D" uid="uid://m03xse014gws" path="res://Art stuff/sprites/world/sky_clouds_far.png" id="4_lki5q"]
+[ext_resource type="Texture2D" uid="uid://b7fsnkket5ndt" path="res://Art stuff/sprites/world/sky_clouds_close.png" id="5_48mhk"]
+
+[node name="BackgroundController" type="Node2D"]
+
+[node name="BackgroundLayer0" type="TextureRect" parent="."]
+z_index = -1000
+z_as_relative = false
+custom_minimum_size = Vector2(5000, 1000)
+offset_right = 5000.0
+offset_bottom = 1000.0
+texture = ExtResource("2_xxqhh")
+expand_mode = 1
+script = ExtResource("3_k5v6k")
+xMult = 1.0
+yMult = 0.98
+
+[node name="BackgroundLayer1" type="TextureRect" parent="."]
+z_index = -900
+z_as_relative = false
+custom_minimum_size = Vector2(20000, 1000)
+offset_right = 5000.0
+offset_bottom = 1000.0
+texture = ExtResource("4_lki5q")
+expand_mode = 1
+stretch_mode = 1
+script = ExtResource("3_k5v6k")
+xMult = 0.8
+yMult = 0.95
+
+[node name="BackgroundLayer2" type="TextureRect" parent="."]
+z_index = -800
+z_as_relative = false
+custom_minimum_size = Vector2(20000, 1000)
+offset_right = 5000.0
+offset_bottom = 1000.0
+texture = ExtResource("5_48mhk")
+expand_mode = 1
+stretch_mode = 1
+script = ExtResource("3_k5v6k")
+xMult = 0.6
+yMult = 0.9
