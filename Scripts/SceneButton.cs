@@ -14,7 +14,7 @@ public partial class SceneButton : Button
 
 	public override void _Pressed()
 	{
-		GameController.Instance.GotoScene(RoomPath);
+		GameController.Instance.TransitionToScene(RoomPath);
 	}
 
 

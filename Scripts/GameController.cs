@@ -26,6 +26,11 @@ public partial class GameController : Node
 
 	private CanvasLayer PauseMenuNode;
 	//private PackedScene PlayerScene;
+	private TransitionScreen TransitionScreenScript;
+	public int transitionTimer = 0;
+	public int transitionBuffer = 30;
+	public bool transitionQueued = false;
+	public string queuedScene = "";
 
 	public void DoIt(int damage) {
         GD.Print("BLEH?");
@@ -47,10 +52,11 @@ public partial class GameController : Node
 
 		// Preload UI stuff
 		var PauseMenu = ResourceLoader.Load<PackedScene>("res://Scenes/pause_menu.tscn").Instantiate();
-		var TransitionScreen = ResourceLoader.Load<PackedScene>("res://Scenes/transition_screen.tscn").Instantiate();
+		var TransitionScreenInstance = ResourceLoader.Load<PackedScene>("res://Scenes/transition_screen.tscn").Instantiate();
+		TransitionScreenScript = (TransitionScreen)TransitionScreenInstance;
 		// Add pause menu as child of Game Controller
 		AddChild(PauseMenu);
-		AddChild(TransitionScreen);
+		AddChild(TransitionScreenInstance);
 
 		PauseMenuNode = GetNode<CanvasLayer>("PauseMenu");
 		PauseMenuNode.Visible = false;
@@ -71,7 +77,7 @@ public partial class GameController : Node
 		if (Input.IsActionJustPressed("scene_reload"))
 		{
         	EmitSignal(SignalName.DamagePlayer, 1);
-			GotoScene(CurrentSceneString);
+			TransitionToScene(CurrentSceneString);
 		}
 
 		if (Input.IsActionJustPressed("game_pause"))
@@ -79,11 +85,32 @@ public partial class GameController : Node
 			TogglePause();
 		}
 
+		if(transitionQueued)
+		{
+			if (transitionTimer <= 0)
+			{
+				GotoScene(queuedScene);
+			}
+			else
+			{
+				transitionTimer--;
+			}
+
+		}
+
 
 	}
 
 	public CharacterBody2D GetPlayer() {
 		return (CharacterBody2D)GetTree().GetFirstNodeInGroup("player");
+	}
+
+	public void TransitionToScene(string path)
+	{
+		TransitionScreenScript.targetOffset = 0.0f;
+		queuedScene = path;
+		transitionTimer = TransitionScreenScript.transitionFrames+transitionBuffer;
+		transitionQueued = true;
 	}
 
 	public void GotoScene(string path)
@@ -98,6 +125,8 @@ public partial class GameController : Node
 	{
 		// It is now safe to remove the current scene.
 		CurrentScene.Free();
+		transitionQueued = false;
+		queuedScene = "";
 
 		CurrentSceneString = path;
 
@@ -135,6 +164,8 @@ public partial class GameController : Node
 
 	private void DeferredRoomStart()
 	{
+		TransitionScreenScript.SetOffset(new Vector2(0.0f, TransitionScreenScript.Offset.Y));
+		TransitionScreenScript.targetOffset = TransitionScreenScript.defaultTargetOffset;
 		var PlayerInstance = ResourceLoader.Load<PackedScene>("res://Scenes/blob_player.tscn").Instantiate();
 		var CameraInstance = ResourceLoader.Load<PackedScene>("res://Scenes/player_camera.tscn").Instantiate();
 		playerPos = new Vector2(0,0);
