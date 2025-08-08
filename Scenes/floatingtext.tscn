@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://ds1n6uwebf1ft" path="res://Scripts/floatingtext.gd" id="1_egixe"]
 
 [node name="RichTextLabel" type="RichTextLabel"]
-offset_right = 600.0
-offset_bottom = 40.0
-pivot_offset = Vector2(300, 20)
+offset_right = 400.0
+offset_bottom = 20.0
+pivot_offset = Vector2(200, 10)
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 bbcode_enabled = true
 fit_content = true

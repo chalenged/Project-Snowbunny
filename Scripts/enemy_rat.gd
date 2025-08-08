@@ -70,9 +70,10 @@ func _physics_process(delta):
 		shoutList.append(current_state)
 		if Health < 5:
 			shoutList.append(3)
+		print(shoutList)
 		$shoutBox.pickShout(shoutList)
 		await get_tree().create_timer(3.0).timeout
-		
+		$shoutBox.clearShout()
 	
 	move_and_slide()
 	
