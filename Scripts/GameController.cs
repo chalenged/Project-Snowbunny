@@ -76,13 +76,8 @@ public partial class GameController : Node
 
 		if (Input.IsActionJustPressed("scene_reload"))
 		{
-<<<<<<< Updated upstream
 			EmitSignal(SignalName.DamagePlayer, 1);
 			TransitionToScene(CurrentSceneString);
-=======
-			EmitSignal(SignalName.DamagePlayer, 1);
-			GotoScene(CurrentSceneString);
->>>>>>> Stashed changes
 		}
 
 		if (Input.IsActionJustPressed("game_pause"))
