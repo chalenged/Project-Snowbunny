@@ -218,9 +218,10 @@ position = Vector2(-20, 4)
 shape = SubResource("RectangleShape2D_o6jqw")
 
 [node name="shoutBox" parent="." instance=ExtResource("9_6xak5")]
-offset_left = -83.0
-offset_top = -34.0
-offset_right = 83.0
+offset_left = -200.0
+offset_top = -30.0
+offset_right = 200.0
 offset_bottom = -20.0
+pivot_offset = Vector2(200, 5)
 
 [connection signal="area_entered" from="BulletCollision" to="." method="_on_bullet_collision_area_entered"]

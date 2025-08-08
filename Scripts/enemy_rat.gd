@@ -33,9 +33,11 @@ func _physics_process(delta):
 	if direction.x > 0:
 		rotation_degrees = 180
 		scale.y = -1
+		$shoutBox.scale.x = -1
 	else:
 		rotation_degrees = 0
 		scale.y = 1
+		$shoutBox.scale.x = 1
 	
 	if (current_state == 2):
 		var areaList = $TestAttackHurtbox.get_overlapping_areas()
@@ -64,10 +66,13 @@ func _physics_process(delta):
 	
 	if shoutCooldown >= randi_range(5,20):
 		shoutCooldown = 0
-		#clamp so it doesn't pick a list that doesn't exist lole
-		$shoutBox.pickShout([clampi(current_state, 0, 1)])
+		var shoutList = []
+		shoutList.append(current_state)
+		if Health < 5:
+			shoutList.append(3)
+		$shoutBox.pickShout(shoutList)
 		await get_tree().create_timer(3.0).timeout
-		$shoutBox.clearShout()
+		
 	
 	move_and_slide()
 	
