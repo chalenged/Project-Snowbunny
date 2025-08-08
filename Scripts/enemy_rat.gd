@@ -8,6 +8,7 @@ var playerDistanceY
 var direction
 var Health = 5
 var attackCooldown = 0
+var shoutCooldown = 0
 
 #runs when scene is loaded for the first time
 func _ready():
@@ -17,6 +18,7 @@ func _ready():
 	
 func _physics_process(delta): 
 	attackCooldown += delta * $"/root/GameController".timeScale
+	shoutCooldown += delta * $"/root/GameController".timeScale
 	#get distance to player
 	playerDistance = $"/root/GameController".playerPos.distance_to(position)
 	gravity = get_gravity()
@@ -60,6 +62,13 @@ func _physics_process(delta):
 			2:
 				_attack()
 	
+	if shoutCooldown >= randi_range(5,20):
+		shoutCooldown = 0
+		#clamp so it doesn't pick a list that doesn't exist lole
+		$shoutBox.pickShout([clampi(current_state, 0, 1)])
+		await get_tree().create_timer(3.0).timeout
+		$shoutBox.clearShout()
+	
 	move_and_slide()
 	
 func _idle_state():
@@ -95,7 +104,6 @@ func _on_bullet_collision_area_entered(_area):
 	
 func death():
 	$AnimatedSprite2D.play("death")
-	velocity.x = randf_range(50,100) * -direction.x
 	set_collision_layer_value(1, false)
 	set_collision_layer_value(2, false)
 	$BulletCollision.set_collision_mask_value(2, false)

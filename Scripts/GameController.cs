@@ -33,15 +33,15 @@ public partial class GameController : Node
 	public string queuedScene = "";
 
 	public void DoIt(int damage) {
-        GD.Print("BLEH?");
-    }
+		GD.Print("BLEH?");
+	}
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-        DamagePlayer += DoIt;
-        EmitSignal(SignalName.DamagePlayer, 1);
-        Viewport root = GetTree().Root;
+		DamagePlayer += DoIt;
+		EmitSignal(SignalName.DamagePlayer, 1);
+		Viewport root = GetTree().Root;
 		CurrentScene = root.GetChild(-1);
 		Instance = this;
 		playerPos = new Vector2(0,0);
@@ -76,8 +76,13 @@ public partial class GameController : Node
 
 		if (Input.IsActionJustPressed("scene_reload"))
 		{
-        	EmitSignal(SignalName.DamagePlayer, 1);
+<<<<<<< Updated upstream
+			EmitSignal(SignalName.DamagePlayer, 1);
 			TransitionToScene(CurrentSceneString);
+=======
+			EmitSignal(SignalName.DamagePlayer, 1);
+			GotoScene(CurrentSceneString);
+>>>>>>> Stashed changes
 		}
 
 		if (Input.IsActionJustPressed("game_pause"))
