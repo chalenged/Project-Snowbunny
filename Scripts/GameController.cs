@@ -45,10 +45,12 @@ public partial class GameController : Node
 		// Make Game Controller unpausable.
 		ProcessMode = Node.ProcessModeEnum.Always;
 
-		// Preload pause menu
+		// Preload UI stuff
 		var PauseMenu = ResourceLoader.Load<PackedScene>("res://Scenes/pause_menu.tscn").Instantiate();
+		var TransitionScreen = ResourceLoader.Load<PackedScene>("res://Scenes/transition_screen.tscn").Instantiate();
 		// Add pause menu as child of Game Controller
 		AddChild(PauseMenu);
+		AddChild(TransitionScreen);
 
 		PauseMenuNode = GetNode<CanvasLayer>("PauseMenu");
 		PauseMenuNode.Visible = false;
@@ -136,7 +138,6 @@ public partial class GameController : Node
 		var PlayerInstance = ResourceLoader.Load<PackedScene>("res://Scenes/blob_player.tscn").Instantiate();
 		var CameraInstance = ResourceLoader.Load<PackedScene>("res://Scenes/player_camera.tscn").Instantiate();
 		playerPos = new Vector2(0,0);
-		Pause(false);
 		GD.Print("Room has started!");
 		GD.Print(SpawnNodeList.Count + " Spawn nodes found!");
 		var PlayerNode2D = (Node2D)PlayerInstance;
@@ -146,6 +147,7 @@ public partial class GameController : Node
 		CameraNode2D.Position = SpawnPosition;
 		GetTree().CurrentScene.AddChild(PlayerInstance);
 		GetTree().CurrentScene.AddChild(CameraInstance);
+		Pause(false);
 		
 		
 
