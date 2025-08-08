@@ -14,9 +14,8 @@ func _process(delta):
 
 func pickShout(situationList: Array):
 	var picked = situationList.pick_random()
-	print(picked)
 	if picked > shoutList.size():
-		set_text("uh oh!! error!!!")
+		set_text("uh oh!! out of bounds error!!! dumby!!!")
 	else:
 		(set_text(shoutList[picked].pick_random()))
 
