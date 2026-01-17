@@ -14,7 +14,7 @@ func _process(delta):
 
 func pickShout(situationList: Array):
 	var picked = situationList.pick_random()
-	if picked > shoutList.size():
+	if picked >= shoutList.size(): #arrays are zero-index in gdscript, so if picked = size(), picked is out of bounds (i.e. size of 2 has array indexes 0 and 1, not 2)
 		set_text("uh oh!! out of bounds error!!! dumby!!!")
 	else:
 		(set_text(shoutList[picked].pick_random()))
